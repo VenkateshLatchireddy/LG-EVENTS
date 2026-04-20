@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import React, { useState,} from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 // Swiper imports for Swiper 12
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation, EffectFade, Parallax } from 'swiper/modules';
+import { Autoplay, Pagination,  } from 'swiper/modules';
 
 // Swiper CSS imports - only need these once
 import 'swiper/css';
@@ -18,33 +18,23 @@ import 'swiper/css/parallax';
 import { 
   Calendar, 
   Users, 
-  Award, 
-  Clock, 
+
   ArrowRight,
   Star,
   ChevronRight,
   ChevronLeft,
-  Sparkles,
   Music,
   Camera,
   Utensils,
   Mic,
-  Palette,
-  Video,
   CheckCircle,
   Play,
   Quote,
   TrendingUp,
   Heart,
-  Gift,
   Globe,
-  Zap,
   Baby,
   Flower2,
-  Flower,
-  Leaf,
-  Sprout,
-  Trees,
   Share2,
   Eye,
   Copy,
@@ -81,11 +71,9 @@ interface Event {
 }
 
 const Home: React.FC = () => {
-  const [activeVideo, setActiveVideo] = useState<number | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<Event | null>(null);
   const [copied, setCopied] = useState(false);
   const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleLike = (id: string) => {
     setLikedStates((prev) => {

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useAnimation, useInView, Variants } from 'framer-motion';
+import React, { useState, useRef,  } from 'react';
+import { motion, useInView, Variants } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 
 // React Icons Imports
@@ -64,7 +64,7 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [focusedField, setFocusedField] = useState<string>('');
-  const [submitError, setSubmitError] = useState<string>('');
+  const [submitError, ] = useState<string>('');
   
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });

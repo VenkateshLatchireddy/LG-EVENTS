@@ -264,7 +264,7 @@ const Navbar: React.FC = () => {
                 </motion.div>
 
                 <div className="space-y-2">
-                  {navLinks.map((link, idx) => (
+                  {navLinks.map((link,) => (
                     <motion.div
                       key={link.name}
                       variants={mobileItemVariants}
