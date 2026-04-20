@@ -265,7 +265,7 @@ const Home: React.FC = () => {
       title: 'Naming Ceremony',
       date: 'February 10, 2025',
       guests: '80+',
-      image: getCloudinaryUrl('namingcerenomy', 800, 600),
+      image: getCloudinaryUrl('kidssssssssnjfjhfjkfjjfjn', 800, 600),
       category: 'Kids Ceremony',
       description: 'A beautiful naming ceremony celebrating a newborn with traditional rituals, blessings, and joyful gatherings with family and friends.'
     },
