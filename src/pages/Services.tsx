@@ -14,10 +14,7 @@ import {
   Sparkles,
   Camera,
   Award,
-  Flower2,
-  Utensils,
-  Music,
-  Cake
+
 } from 'lucide-react';
 import { FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 
