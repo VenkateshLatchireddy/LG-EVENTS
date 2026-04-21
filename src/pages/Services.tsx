@@ -199,7 +199,7 @@ const Services: React.FC = () => {
                   className="pl-5 text-lg md:text-xl text-white/90 leading-relaxed italic"
                   style={{ fontFamily: 'serif' }}
                 >
-                  "పెళ్లి, నామకరణం, పుట్టినరోజు, లంగా ఓణి —<br />
+                  "పెళ్లి, నామకరణం, పుట్టినరోజు, లంగా ఓణి <br />
                   మీ ప్రతి శుభవేళను మేం అద్భుతంగా మలుస్తాం."
                 </p>
               </div>

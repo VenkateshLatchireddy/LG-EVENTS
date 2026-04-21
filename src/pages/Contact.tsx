@@ -73,7 +73,7 @@ const Contact: React.FC = () => {
     { value: 'Wedding', label: 'Wedding', icon: FaRing, color: 'from-pink-500 to-rose-500' },
     { value: 'Reception', label: 'Reception', icon: MdBusinessCenter, color: 'from-blue-500 to-indigo-500' },
     { value: 'Birthday Party', label: 'Birthday Party', icon: FaBirthdayCake, color: 'from-purple-500 to-pink-500' },
-    { value: 'Anniversary/Retirement', label: 'Anniversary/Retirement', icon: FaGift, color: 'from-red-500 to-orange-500' },
+    { value: 'Anniversary/Retirement', label: 'Anniversary', icon: FaGift, color: 'from-red-500 to-orange-500' },
     { value: 'Naming Ceremony', label: 'Naming Ceremony', icon: FaChalkboard, color: 'from-cyan-500 to-blue-500' },
     { value: 'Half Sree Ceremony', label: 'Half Saree Ceremony', icon: MdLocalOffer, color: 'from-green-500 to-emerald-500' },
     { value: 'Haldi Ceremony', label: 'Haldi Ceremony', icon: FaTrophy, color: 'from-yellow-500 to-amber-500' },
@@ -122,7 +122,7 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
     
     const message = formatWhatsAppMessage();
-    const phoneNumber = '918142244668';
+    const phoneNumber = '919542256678';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     
     setTimeout(() => {
@@ -168,8 +168,8 @@ const Contact: React.FC = () => {
     { 
       icon: FaPhone, 
       title: 'Call Us', 
-      details: ['+91 81422 46688'],
-      action: '+918142246688',
+      details: ['+91 9542256678'],
+      action: '+919542256678',
       color: 'text-green-500'
     },
     { 
@@ -190,7 +190,7 @@ const Contact: React.FC = () => {
   const socialLinks = [
     { icon: FaFacebookF, href: 'https://facebook.com', color: 'hover:bg-blue-600', label: 'Facebook' },
     { icon: FaInstagram, href: 'https://instagram.com', color: 'hover:bg-pink-600', label: 'Instagram' },
-    { icon: FaWhatsapp, href: 'https://wa.me/918142244688', color: 'hover:bg-green-600', label: 'WhatsApp' }
+    { icon: FaWhatsapp, href: 'https://wa.me/919542256678', color: 'hover:bg-green-600', label: 'WhatsApp' }
   ];
 
   // Animation variants with proper TypeScript typing
@@ -371,7 +371,7 @@ const Contact: React.FC = () => {
                                 ? 'border-primary shadow-lg' 
                                 : 'border-gray-200 hover:border-primary/50'
                           }`}
-                          placeholder="8142244668"
+                          placeholder=""
                         />
                         {errors.phone && (
                           <motion.p
@@ -606,7 +606,7 @@ const Contact: React.FC = () => {
                     <FaWhatsapp size={32} />
                     <div>
                       <p className="font-semibold">WhatsApp Us</p>
-                      <p className="text-sm opacity-90">+91 81422 46688</p>
+                      <p className="text-sm opacity-90">+91 9542256678</p>
                     </div>
                   </div>
                 </div>
