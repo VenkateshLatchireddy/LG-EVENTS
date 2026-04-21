@@ -22,7 +22,17 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-    // Remove minify: 'terser' entirely or use 'esbuild' instead
-    minify: 'esbuild', // This doesn't require additional installation
+    minify: 'esbuild',
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'framer-motion': ['framer-motion'],
+          'icons': ['react-icons'],
+          'swiper': ['swiper'],
+        },
+      },
+    },
   },
 })
