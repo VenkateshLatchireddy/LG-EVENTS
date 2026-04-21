@@ -213,7 +213,7 @@ const Navbar: React.FC = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Side Drawer Menu */}
+      {/* Mobile Side Drawer Menu - UPDATED WITH ACTUAL LOGO */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -234,25 +234,33 @@ const Navbar: React.FC = () => {
               className="fixed top-0 left-0 bottom-0 w-full max-w-xs bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
               <div className="p-6">
+                {/* Mobile Menu Header - NOW WITH ACTUAL LOGO */}
                 <motion.div 
                   variants={mobileItemVariants}
                   className="flex items-center justify-between mb-6 pb-4 border-b border-gray-700"
                 >
-                  <motion.div 
+                  <Link 
+                    to="/" 
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center space-x-3"
-                    whileHover={{ scale: 1.05 }}
                   >
                     <motion.div 
-                      className="w-12 h-12 bg-gradient-to-r from-amber-500 to-red-500 rounded-full flex items-center justify-center shadow-xl"
-                      animate={pulseAnimation}
+                      className="relative w-12 h-12 rounded-full overflow-hidden shadow-xl"
+                      whileHover={{ scale: 1.05 }}
                     >
-                      <Sparkles size={22} className="text-white" />
+                      <img 
+                        src={LGE_LOGO} 
+                        alt="LAKSHMI GANAPATHI EVENTS" 
+                        className="w-full h-full object-cover"
+                      />
                     </motion.div>
                     <div>
-                      <div className="text-sm font-bold text-white">LAKSHMI GANAPATHI</div>
+                      <div className="text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text text-transparent">
+                        LAKSHMI GANAPATHI
+                      </div>
                       <div className="text-[10px] text-gray-400">Events</div>
                     </div>
-                  </motion.div>
+                  </Link>
                   <motion.button
                     onClick={() => setIsOpen(false)}
                     className="p-2 rounded-lg bg-white/10 text-white"
@@ -263,8 +271,9 @@ const Navbar: React.FC = () => {
                   </motion.button>
                 </motion.div>
 
+                {/* Navigation Links */}
                 <div className="space-y-2">
-                  {navLinks.map((link,) => (
+                  {navLinks.map((link) => (
                     <motion.div
                       key={link.name}
                       variants={mobileItemVariants}
@@ -280,11 +289,18 @@ const Navbar: React.FC = () => {
                       >
                         <link.icon size={18} />
                         <span className="font-medium">{link.name}</span>
+                        {location.pathname === link.path && (
+                          <motion.div
+                            layoutId="mobileMenuActive"
+                            className="ml-auto w-1 h-1 bg-amber-500 rounded-full"
+                          />
+                        )}
                       </Link>
                     </motion.div>
                   ))}
                 </div>
 
+                {/* Get Quote Button */}
                 <motion.div 
                   variants={mobileItemVariants}
                   className="mt-6 pt-6 border-t border-gray-700"
@@ -305,7 +321,10 @@ const Navbar: React.FC = () => {
                         whileHover={{ x: 0 }}
                         transition={{ duration: 0.3 }}
                       />
-                      <span className="relative z-10">Get Quote</span>
+                      <span className="relative z-10 flex items-center justify-center gap-2">
+                        <Sparkles size={16} />
+                        Get Quote
+                      </span>
                     </Link>
                   </motion.div>
                 </motion.div>
@@ -315,7 +334,7 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Mobile Bottom Navigation Bar - NOW WITH ALL 7 ITEMS */}
+      {/* Mobile Bottom Navigation Bar - ALL 7 ITEMS */}
       <motion.div 
         initial={{ y: 100 }}
         animate={{ y: 0 }}
