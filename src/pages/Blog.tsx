@@ -34,7 +34,7 @@ const reels: ReelVideo[] = [
   { id: '2', publicId: 'reel22222222', title: 'Haldi Ceremony', description: 'Vibrant haldi celebration with traditional songs', likes: 2345 },
   { id: '3', publicId: 'reel33333333', title: 'Half Saree Function', description: 'Elegant half saree ceremony with family', likes: 3456 },
   { id: '4', publicId: 'reel444444', title: 'Housewarming Pooja', description: 'Sacred housewarming rituals and celebrations', likes: 4567 },
-  { id: '5', publicId: 'reel555555', title: 'Birthday Celebration', description: 'Fun and festive birthday party with friends and family', likes: 5678 },
+  { id: '5', publicId: 'reel555555', title: 'Wedding Celebration', description: 'Fun and festive wedding party with friends and family', likes: 5678 },
 ];
 
 /* ============================================

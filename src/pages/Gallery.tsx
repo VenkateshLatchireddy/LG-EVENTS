@@ -66,7 +66,7 @@ const Gallery: React.FC = () => {
     { id: '8', publicId: 'housewarmingfshhdfhf', category: 'housewarming', likes: 167 },
     // Naming Ceremonies (2 images)
     { id: '9', publicId: 'gallerybbchjdbbgdh', category: 'naming-ceremony', likes: 156 },
-    { id: '10', publicId: 'slide4', category: 'naming-ceremony', likes: 178 },
+    { id: '10', publicId: 'namingceremonybcjfbjjfhfj', category: 'naming-ceremony', likes: 178 },
     // Receptions (2 images)
     { id: '11', publicId: 'eventgbgkkkllkkk', category: 'reception', likes: 198 },
     { id: '12', publicId: 'receptionsghdhhjdhdfhj', category: 'reception', likes: 167 },

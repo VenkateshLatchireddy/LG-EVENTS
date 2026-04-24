@@ -130,7 +130,7 @@ const Events: React.FC = () => {
       description: 'Sacred naming ceremony with Vedic chants, family blessings, cradle ceremony, and traditional rituals.',
       date: 'March 5, 2025',
       location: 'Navabharat Nagar Rajahmundry',
-      imagePublicId: 'namingcerenomy',
+      imagePublicId: 'namingceremonybcjfbjjfhfj',
       category: 'naming-ceremony',
       guests: 800,
       duration: '6 hours'
