@@ -26,11 +26,29 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'framer-motion': ['framer-motion'],
-          'icons': ['react-icons'],
-          'swiper': ['swiper'],
+        manualChunks: (id) => {
+          // React vendor chunk
+          if (id.includes('node_modules/react') || 
+              id.includes('node_modules/react-dom') || 
+              id.includes('node_modules/react-router-dom')) {
+            return 'react-vendor';
+          }
+          // Framer motion chunk
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-motion';
+          }
+          // React Icons chunk
+          if (id.includes('node_modules/react-icons')) {
+            return 'icons';
+          }
+          // Swiper chunk
+          if (id.includes('node_modules/swiper')) {
+            return 'swiper';
+          }
+          // Default chunk for other node_modules
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
       },
     },
