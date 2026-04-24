@@ -49,8 +49,8 @@ const Footer: React.FC = () => {
 
   const socialLinks: SocialLink[] = [
     { icon: FaFacebook, href: 'https://facebook.com', color: 'hover:text-blue-500', name: 'Facebook' },
-    { icon: FaInstagram, href: 'https://instagram.com', color: 'hover:text-pink-500', name: 'Instagram' },
-    { icon: FaYoutube, href: 'https://youtube.com', color: 'hover:text-red-500', name: 'YouTube' },
+    { icon: FaInstagram, href: 'https://www.instagram.com/lg_events.rjy?igsh=NzVhajdmNW5hMGs=', color: 'hover:text-pink-500', name: 'Instagram' },
+    { icon: FaYoutube, href: 'https://www.youtube.com/@lalampadma-hj5ip', color: 'hover:text-red-500', name: 'YouTube' },
   ];
 
   // Animation Variants
@@ -204,8 +204,8 @@ const itemVariant = {
               <motion.div className="flex items-start gap-3" variants={itemVariant}>
                 <Mail size={19} className="text-amber-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-300 break-all">info@lgevents.com</p>
-                  <p className="text-gray-500 text-xs">careers@lgevents.com</p>
+                  <p className="text-gray-300 break-all">yogeshrayudu5556@gmail.com</p>
+                  <p className="text-gray-500 text-xs">lakshmiganapathievents@gmail.com</p>
                 </div>
               </motion.div>
 

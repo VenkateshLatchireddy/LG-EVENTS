@@ -174,7 +174,7 @@ const Events: React.FC = () => {
       description: 'Divine Sri Ram Navami celebration featuring Ramayana chanting, free meal service, devotional music, and charity.',
       date: 'November 25, 2025',
       location: 'Jam Peta, Rajahmundry',
-      imagePublicId: 'jaisriramhjdhfhfh',
+      imagePublicId: 'jaisrirambvcdghjdehjhfjdjdj',
       category: 'charity',
       guests: 350,
       duration: '10 hours'

@@ -34,6 +34,7 @@ const reels: ReelVideo[] = [
   { id: '2', publicId: 'reel22222222', title: 'Haldi Ceremony', description: 'Vibrant haldi celebration with traditional songs', likes: 2345 },
   { id: '3', publicId: 'reel33333333', title: 'Half Saree Function', description: 'Elegant half saree ceremony with family', likes: 3456 },
   { id: '4', publicId: 'reel444444', title: 'Housewarming Pooja', description: 'Sacred housewarming rituals and celebrations', likes: 4567 },
+  { id: '5', publicId: 'reel555555', title: 'Birthday Celebration', description: 'Fun and festive birthday party with friends and family', likes: 5678 },
 ];
 
 /* ============================================
@@ -50,16 +51,12 @@ const DesktopView: React.FC = () => {
     const isCurrentlyPlaying = playingVideoId === reelId;
 
     if (isCurrentlyPlaying) {
-      if (video) {
-        video.pause();
-      }
+      if (video) video.pause();
       setPlayingVideoId(null);
     } else {
       if (playingVideoId && videoRefs.current[playingVideoId]) {
         const prevVideo = videoRefs.current[playingVideoId];
-        if (prevVideo) {
-          prevVideo.pause();
-        }
+        if (prevVideo) prevVideo.pause();
       }
       if (video) {
         video.muted = false;
@@ -73,9 +70,7 @@ const DesktopView: React.FC = () => {
   useEffect(() => {
     return () => {
       Object.values(videoRefs.current).forEach(video => {
-        if (video) {
-          video.pause();
-        }
+        if (video) video.pause();
       });
     };
   }, []);
@@ -106,17 +101,15 @@ const DesktopView: React.FC = () => {
             const showButton = !isPlaying || (isPlaying && isHovered);
 
             return (
-              <div 
-                key={reel.id} 
+              <div
+                key={reel.id}
                 className="relative group"
                 onMouseEnter={() => setHoveredVideoId(reel.id)}
                 onMouseLeave={() => setHoveredVideoId(null)}
               >
                 <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-gray-900 shadow-lg">
                   <video
-                    ref={(el) => {
-                      if (el) videoRefs.current[reel.id] = el;
-                    }}
+                    ref={(el) => { if (el) videoRefs.current[reel.id] = el; }}
                     src={getCloudinaryVideoUrl(reel.publicId)}
                     poster={getCloudinaryThumbnailUrl(reel.publicId)}
                     className="w-full h-full object-cover"
@@ -125,7 +118,7 @@ const DesktopView: React.FC = () => {
                     muted
                     preload="metadata"
                   />
-                  
+
                   {showButton && (
                     <button
                       onClick={() => handlePlayPause(reel.id)}
@@ -162,9 +155,7 @@ const DesktopView: React.FC = () => {
 };
 
 /* ============================================
-   MOBILE VIEW - FIXED BUTTON BEHAVIOR
-   Button shows ONLY when video is PAUSED
-   Button HIDES when video is PLAYING
+   MOBILE VIEW
    ============================================ */
 const MobileView: React.FC = () => {
   const navigate = useNavigate();
@@ -180,9 +171,7 @@ const MobileView: React.FC = () => {
 
   useEffect(() => {
     const initialLikes: Record<string, number> = {};
-    reels.forEach(reel => {
-      initialLikes[reel.id] = reel.likes;
-    });
+    reels.forEach(reel => { initialLikes[reel.id] = reel.likes; });
     setLikesCount(initialLikes);
   }, []);
 
@@ -191,26 +180,21 @@ const MobileView: React.FC = () => {
     const interval = setInterval(() => {
       const newStates: Record<number, boolean> = {};
       videoRefs.current.forEach((video, idx) => {
-        if (video) {
-          newStates[idx] = !video.paused;
-        }
+        if (video) newStates[idx] = !video.paused;
       });
       setVideoPlayingStates(newStates);
     }, 100);
-
     return () => clearInterval(interval);
   }, []);
 
   // Handle video playback when active index changes
   useEffect(() => {
     const currentVideo = videoRefs.current[activeIndex];
-    
+
     videoRefs.current.forEach((video, idx) => {
-      if (video && idx !== activeIndex) {
-        video.pause();
-      }
+      if (video && idx !== activeIndex) video.pause();
     });
-    
+
     if (currentVideo) {
       currentVideo.muted = muted;
       currentVideo.currentTime = 0;
@@ -219,9 +203,7 @@ const MobileView: React.FC = () => {
   }, [activeIndex, muted]);
 
   const goTo = useCallback((idx: number) => {
-    if (idx >= 0 && idx < reels.length) {
-      setActiveIndex(idx);
-    }
+    if (idx >= 0 && idx < reels.length) setActiveIndex(idx);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -231,27 +213,20 @@ const MobileView: React.FC = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
-    const delta = e.touches[0].clientY - touchStartY.current;
-    setDragOffset(delta);
+    setDragOffset(e.touches[0].clientY - touchStartY.current);
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    if (dragOffset < -50) {
-      goTo(activeIndex + 1);
-    } else if (dragOffset > 50) {
-      goTo(activeIndex - 1);
-    }
+    if (dragOffset < -50) goTo(activeIndex + 1);
+    else if (dragOffset > 50) goTo(activeIndex - 1);
     setDragOffset(0);
   };
 
   const handleLike = (id: string) => {
     const isLiked = liked[id];
     setLiked(prev => ({ ...prev, [id]: !isLiked }));
-    setLikesCount(prev => ({
-      ...prev,
-      [id]: isLiked ? prev[id] - 1 : prev[id] + 1
-    }));
+    setLikesCount(prev => ({ ...prev, [id]: isLiked ? prev[id] - 1 : prev[id] + 1 }));
     if ('vibrate' in navigator) navigator.vibrate(50);
   };
 
@@ -263,11 +238,8 @@ const MobileView: React.FC = () => {
   const togglePlayPause = (idx: number) => {
     const video = videoRefs.current[idx];
     if (video) {
-      if (video.paused) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
+      if (video.paused) video.play().catch(() => {});
+      else video.pause();
     }
   };
 
@@ -275,9 +247,6 @@ const MobileView: React.FC = () => {
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return num.toString();
   };
-
-  // Check if current video is playing
-  const isCurrentVideoPlaying = videoPlayingStates[activeIndex] || false;
 
   return (
     <div
@@ -323,7 +292,7 @@ const MobileView: React.FC = () => {
           {reels.map((reel, idx) => {
             const isActive = idx === activeIndex;
             const isPlaying = videoPlayingStates[idx] || false;
-            
+
             return (
               <div
                 key={reel.id}
@@ -343,12 +312,12 @@ const MobileView: React.FC = () => {
                   onPause={() => setVideoPlayingStates(prev => ({ ...prev, [idx]: false }))}
                   onEnded={() => setVideoPlayingStates(prev => ({ ...prev, [idx]: false }))}
                 />
-                
+
                 {/* Gradients */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
-                {/* Play Button - ONLY shows when video is PAUSED and is ACTIVE */}
+                {/* Play Button - ONLY shows when video is PAUSED and ACTIVE */}
                 {isActive && !isPlaying && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-black/20">
                     <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center">
@@ -431,17 +400,13 @@ const BlogPost: React.FC = () => {
 
   useEffect(() => {
     setIsClient(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  if (!isClient) {
-    return null;
-  }
+  if (!isClient) return null;
 
   return (
     <>
@@ -451,8 +416,7 @@ const BlogPost: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <style>{`
           @media (max-width: 767px) {
-            footer { display: none !important;
-            }
+            footer { display: none !important; }
           }
           .line-clamp-2 {
             display: -webkit-box;

@@ -7,14 +7,12 @@ import {
   Share2,
   ArrowLeft,
   CheckCircle,
-  MessageCircle,
   Phone,
   Mail,
   Link as LinkIcon,
   Sparkles,
   Camera,
   Award,
-
 } from 'lucide-react';
 import { FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 
@@ -39,6 +37,52 @@ interface EventDetail {
   vendors: { name: string; type: string }[];
 }
 
+// Move the data outside the component to avoid recreation on each render
+const getEventData = (id: string): EventDetail => ({
+  id: id || '1',
+  title: 'లక్ష్మీ గణపతి ఈవెంట్స్',
+  description: 'మీ ప్రతి వేడుకను అత్యంత అందంగా, అద్భుతంగా మరియు యాదుగా చేసే నిపుణుల బృందం.',
+  longDescription: `రాజమహేంద్రవరంలోని ప్రముఖ ఈవెంట్ నిర్వాహక సంస్థ లక్ష్మీ గణపతి ఈవెంట్స్‌కు స్వాగతం. మేము వివాహాలు, నామకరణాలు (బాలాష్టమి), సీమంతం, పుట్టినరోజు వేడుకలు, లంగా ఓణి (హాఫ్ సారీ) ఫంక్షన్లు, హౌస్ వార్మింగ్ సెరిమోనీలు మరియు అన్ని రకాల శుభ సందర్భాలను అత్యంత వైభవంగా నిర్వహిస్తాము.
+
+వివాహం అనేది జీవితంలోని అతి ముఖ్యమైన సందర్భం. మేము సాంప్రదాయ విధానంతో పాటు ఆధునిక అలంకరణలను అందిస్తాము. పూల అలంకరణలు, మండప డెకరేషన్, బారాత్ ఏర్పాట్లు, విందు భోజనం, లైవ్ మ్యూజిక్, DJ, మేళతాళాలు - అన్నింటినీ ఒకే తాటిపై నిర్వహిస్తాము.
+
+నామకరణం అంటే శిశువుకు పేరు పెట్టే శుభ సందర్భం. ఈ సందర్భాన్ని పూలతో, రంగులతో, సంప్రదాయ వాయిద్యాలతో అలరించడం మా ప్రత్యేకత. పుట్టినరోజు వేడుకలు, లంగా ఓణి ఫంక్షన్లు కూడా మేము అత్యంత ఆకర్షణీయంగా నిర్వహిస్తాము.
+
+మా దగ్గర 50+ రకాల థీమ్ డెకరేషన్లు ఉన్నాయి - బాలీవుడ్ థీమ్, రాజస్థానీ థీమ్, ఫ్లోరల్ గార్డెన్ థీమ్, రాయల్ పింక్ థీమ్, మరెన్నో. మీకు నచ్చిన థీమ్ ప్రకారం మేము అలంకరణలు చేస్తాము.`,
+  date: '',
+  location: 'రాజమహేంద్రవరం',
+  image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777042940/pexels-nikku0109-33885310_kxuauo.jpg',
+  gallery: [
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777052802/IMG-20260424-WA0102_jpgfi6.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777052801/IMG-20260424-WA0101_ofq0w5.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777052801/IMG-20260424-WA0106_ggeg2w.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777052797/IMG-20260424-WA0113_xbnceg.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777052796/IMG-20260424-WA0109_knrjgy.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777053106/IMG-20260424-WA0094_qazxbj.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777053106/IMG-20260424-WA0093_x16kpf.jpg',
+    'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777053104/IMG-20260424-WA0095_kr1xka.jpg'
+  ],
+  category: 'ఈవెంట్ నిర్వహణ',
+  guests: 500,
+  duration: 'అనుకూల సమయం',
+  price: 25000,
+  featured: true,
+  rating: 4.9,
+  reviews: 128,
+  highlights: [
+    '🌸 50+ రకాల థీమ్ డెకరేషన్లు - పూల అలంకరణలు, మండప డెకర్, బ్యాక్‌డ్రాప్ డిజైన్లు',
+    '🎵 లైవ్ మ్యూజిక్, DJ, మేళతాళాలు, నాట్య ప్రదర్శనల ఏర్పాటు',
+    '🍽️ 100+ రకాల వంటకాలతో కూడిన క్యాటరింగ్ - శాకాహార, మాంసాహార ప్రత్యేకతలు',
+    '📸 ప్రొఫెషనల్ ఫోటోగ్రఫీ & సినిమాటిక్ వీడియోగ్రఫీ టీం',
+    '🚗 అతిథుల కోసం లగ్జరీ బస్సులు, కార్లు, టెంపో ట్రావెలర్ల ఏర్పాటు',
+    '⚡ లాస్ట్ మినిట్ ప్లానింగ్ - 24 గంటలలోపు ఈవెంట్ ఏర్పాటు చేసే సౌకర్యం',
+    '👥 30+ మంది నిపుణుల బృందం - ప్రతి వివరాన్ని పర్యవేక్షించడానికి',
+    '🌐 రాజమండ్రి, విశాఖ, విజయవాడ, హైదరాబాద్, తిరుపతిలలో నెట్వర్క్'
+  ],
+  schedule: [],
+  vendors: []
+});
+
 const Services: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -48,60 +92,19 @@ const Services: React.FC = () => {
   const [showShare, setShowShare] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      const eventData: EventDetail = {
-        id: id || '1',
-        title: 'లక్ష్మీ గణపతి ఈవెంట్స్',
-        description: 'మీ ప్రతి వేడుకను అత్యంత అందంగా, అద్భుతంగా మరియు యాదుగా చేసే నిపుణుల బృందం.',
-        longDescription: `రాజమహేంద్రవరంలోని ప్రముఖ ఈవెంట్ నిర్వాహక సంస్థ లక్ష్మీ గణపతి ఈవెంట్స్‌కు స్వాగతం. మేము వివాహాలు, నామకరణాలు (బాలాష్టమి), సీమంతం, పుట్టినరోజు వేడుకలు, లంగా ఓణి (హాఫ్ సారీ) ఫంక్షన్లు, హౌస్ వార్మింగ్ సెరిమోనీలు మరియు అన్ని రకాల శుభ సందర్భాలను అత్యంత వైభవంగా నిర్వహిస్తాము.
-
-వివాహం అనేది జీవితంలోని అతి ముఖ్యమైన సందర్భం. మేము సాంప్రదాయ విధానంతో పాటు ఆధునిక అలంకరణలను అందిస్తాము. పూల అలంకరణలు, మండప డెకరేషన్, బారాత్ ఏర్పాట్లు, విందు భోజనం, లైవ్ మ్యూజిక్, DJ, మేళతాళాలు - అన్నింటినీ ఒకే తాటిపై నిర్వహిస్తాము.
-
-నామకరణం అంటే శిశువుకు పేరు పెట్టే శుభ సందర్భం. ఈ సందర్భాన్ని పూలతో, రంగులతో, సంప్రదాయ వాయిద్యాలతో అలరించడం మా ప్రత్యేకత. పుట్టినరోజు వేడుకలు, లంగా ఓణి ఫంక్షన్లు కూడా మేము అత్యంత ఆకర్షణీయంగా నిర్వహిస్తాము.
-
-మా దగ్గర 50+ రకాల థీమ్ డెకరేషన్లు ఉన్నాయి - బాలీవుడ్ థీమ్, రాజస్థానీ థీమ్, ఫ్లోరల్ గార్డెన్ థీమ్, రాయల్ పింక్ థీమ్, మరెన్నో. మీకు నచ్చిన థీమ్ ప్రకారం మేము అలంకరణలు చేస్తాము.`,
-        date: '',
-        location: 'రాజమహేంద్రవరం',
-        image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200',
-        gallery: [
-          'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
-          'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800',
-          'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800',
-          'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800',
-          'https://images.unsplash.com/photo-1470116945706-e6bf5d5a53ca?w=800',
-          'https://images.unsplash.com/photo-1478146059778-26028b07395a?w=800',
-          'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800',
-          'https://images.unsplash.com/photo-1607861716497-e65ab29fc7ac?w=800'
-        ],
-        category: 'ఈవెంట్ నిర్వహణ',
-        guests: 500,
-        duration: 'అనుకూల సమయం',
-        price: 25000,
-        featured: true,
-        rating: 4.9,
-        reviews: 128,
-        highlights: [
-          '🌸 50+ రకాల థీమ్ డెకరేషన్లు - పూల అలంకరణలు, మండప డెకర్, బ్యాక్‌డ్రాప్ డిజైన్లు',
-          '🎵 లైవ్ మ్యూజిక్, DJ, మేళతాళాలు, నాట్య ప్రదర్శనల ఏర్పాటు',
-          '🍽️ 100+ రకాల వంటకాలతో కూడిన క్యాటరింగ్ - శాకాహార, మాంసాహార ప్రత్యేకతలు',
-          '📸 ప్రొఫెషనల్ ఫోటోగ్రఫీ & సినిమాటిక్ వీడియోగ్రఫీ టీం',
-          '🚗 అతిథుల కోసం లగ్జరీ బస్సులు, కార్లు, టెంపో ట్రావెలర్ల ఏర్పాటు',
-          '⚡ లాస్ట్ మినిట్ ప్లానింగ్ - 24 గంటలలోపు ఈవెంట్ ఏర్పాటు చేసే సౌకర్యం',
-          '👥 30+ మంది నిపుణుల బృందం - ప్రతి వివరాన్ని పర్యవేక్షించడానికి',
-          '🌐 రాజమండ్రి, విశాఖ, విజయవాడ, హైదరాబాద్, తిరుపతిలలో నెట్వర్క్'
-        ],
-        schedule: [],
-        vendors: []
-      };
-      setEvent(eventData);
-      setLoading(false);
-    }, 1000);
+    // Set data immediately
+    const eventData = getEventData(id || '1');
+    setEvent(eventData);
+    setLoading(false);
   }, [id]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     alert('లింక్ కాపీ చేయబడింది!');
   };
+
+  // Phone number constant
+  const phoneNumber = '+919542256678';
 
   if (loading) {
     return (
@@ -221,10 +224,14 @@ const Services: React.FC = () => {
                   <Sparkles size={18} />
                   మీ వేడుక బుక్ చేయండి
                 </Link>
-                <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold border-2 border-white/40 text-white backdrop-blur-sm transition-all hover:border-white hover:bg-white/10">
+                {/* Updated "కోట్ అడగండి" button with phone dialer */}
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold border-2 border-white/40 text-white backdrop-blur-sm transition-all hover:border-white hover:bg-white/10"
+                >
                   <Phone size={18} />
                   కోట్ అడగండి
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -322,20 +329,23 @@ const Services: React.FC = () => {
                   >
                     వేడుక బుక్ చేయండి
                   </Link>
-                  <button
-                    className="w-full py-3 rounded-full font-bold border-2 transition-all"
+                  {/* Updated "కోట్ అడగండి" button with phone dialer */}
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className="block w-full text-center py-3 rounded-full font-bold border-2 transition-all"
                     style={{ borderColor: '#FF6B35', color: '#FF6B35' }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLButtonElement).style.background = '#FF6B35';
-                      (e.currentTarget as HTMLButtonElement).style.color = '#fff';
+                      (e.currentTarget as HTMLAnchorElement).style.background = '#FF6B35';
+                      (e.currentTarget as HTMLAnchorElement).style.color = '#fff';
                     }}
                     onMouseLeave={e => {
-                      (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-                      (e.currentTarget as HTMLButtonElement).style.color = '#FF6B35';
+                      (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
+                      (e.currentTarget as HTMLAnchorElement).style.color = '#FF6B35';
                     }}
                   >
+                    <Phone size={16} className="inline mr-2" />
                     కోట్ అడగండి
-                  </button>
+                  </a>
                 </div>
 
                 {/* Like & Share */}
@@ -396,17 +406,15 @@ const Services: React.FC = () => {
                     మా నిపుణులు మీకు సహాయం చేయడానికి సిద్ధంగా ఉన్నారు
                   </p>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 text-sm">
+                    <a href={`tel:${phoneNumber}`} className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity">
                       <Phone size={16} className="flex-shrink-0" />
-                      <span>+91 99999 88888</span>
-                    </div>
+                      <span>+91 9542256678</span>
+                    </a>
                     <div className="flex items-center gap-3 text-sm">
                       <Mail size={16} className="flex-shrink-0" />
-                      <span>info@lakshmiganapathievents.com</span>
+                      <span>yogeshrayudu5556@gmail.com</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm">
-                      <MessageCircle size={16} className="flex-shrink-0" />
-                      <span>లైవ్ చాట్</span>
                     </div>
                   </div>
                 </div>

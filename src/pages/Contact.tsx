@@ -50,6 +50,28 @@ interface FormErrors {
   message?: string;
 }
 
+interface EventType {
+  value: string;
+  label: string;
+  icon: React.ElementType;
+  color: string;
+}
+
+interface ContactInfo {
+  icon: React.ElementType;
+  title: string;
+  details: string[];
+  action?: string;
+  color: string;
+}
+
+interface SocialLink {
+  icon: React.ElementType;
+  href: string;
+  color: string;
+  label: string;
+}
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -66,10 +88,10 @@ const Contact: React.FC = () => {
   const [focusedField, setFocusedField] = useState<string>('');
   const [submitError] = useState<string>('');
   
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1, triggerOnce: true });
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
-  const eventTypes = [
+  const eventTypes: EventType[] = [
     { value: 'Wedding', label: 'Wedding', icon: FaRing, color: 'from-pink-500 to-rose-500' },
     { value: 'Reception', label: 'Reception', icon: MdBusinessCenter, color: 'from-blue-500 to-indigo-500' },
     { value: 'Birthday Party', label: 'Birthday Party', icon: FaBirthdayCake, color: 'from-purple-500 to-pink-500' },
@@ -97,7 +119,7 @@ const Contact: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const formatWhatsAppMessage = () => {
+  const formatWhatsAppMessage = (): string => {
     const message = `*LAKSHMI GANAPATHI EVENTS - New Inquiry*%0A%0A
 *📋 EVENT DETAILS*%0A
 ━━━━━━━━━━━━━━━━━━━━%0A
@@ -158,11 +180,11 @@ const Contact: React.FC = () => {
     }
   };
 
-  const contactInfo = [
+  const contactInfo: ContactInfo[] = [
     { 
       icon: FaMapMarkerAlt, 
       title: 'Visit Us', 
-      details: ['New Street', 'Rajahmundry', 'Andhra Pradesh'],
+      details: ['Near Apsara Theatre', 'Rajahmundry', 'Andhra Pradesh'],
       color: 'text-red-500'
     },
     { 
@@ -175,7 +197,7 @@ const Contact: React.FC = () => {
     { 
       icon: FaEnvelope, 
       title: 'Email Us', 
-      details: ['LakshmiGanapathiEvents@gmail.com'],
+      details: ['yogeshrayudu5556@gmail.com'],
       action: 'mailto:LakshmiGanapathiEvents@gmail.com',
       color: 'text-blue-500'
     },
@@ -187,19 +209,19 @@ const Contact: React.FC = () => {
     }
   ];
 
-  const socialLinks = [
+  const socialLinks: SocialLink[] = [
     { icon: FaFacebookF, href: 'https://facebook.com', color: 'hover:bg-blue-600', label: 'Facebook' },
-    { icon: FaInstagram, href: 'https://instagram.com', color: 'hover:bg-pink-600', label: 'Instagram' },
+    { icon: FaInstagram, href: 'https://www.instagram.com/lg_events.rjy?igsh=NzVhajdmNW5hMGs=', color: 'hover:bg-pink-600', label: 'Instagram' },
     { icon: FaWhatsapp, href: 'https://wa.me/919542256678', color: 'hover:bg-green-600', label: 'WhatsApp' }
   ];
 
   // Animation variants
   const fadeUpVariant: Variants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
@@ -224,35 +246,26 @@ const Contact: React.FC = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-[400px] md:min-h-[450px] lg:min-h-[500px] overflow-hidden pt-24 pb-12">
-        <motion.div 
-          className="absolute inset-0"
-          initial={{ scale: 1 }}
-          animate={{ scale: 1.1 }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
-        >
+        <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600"
+            src="https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777043260/pexels-mahmoud-yahyaoui-30325201_c6anvy.jpg"
             alt="Contact Us"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
-        </motion.div>
+        </div>
         <div className="relative h-full flex items-center px-4 sm:px-6 md:px-8 lg:px-12 py-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="w-full max-w-4xl text-left"
           >
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="inline-block mb-4"
-            >
+            <div className="inline-block mb-4">
               <span className="bg-primary/20 backdrop-blur-sm rounded-full px-4 py-2 text-primary font-semibold text-sm">
                 Let's Connect
               </span>
-            </motion.div>
+            </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
               Let's Start Your <span className="text-primary">Journey</span>
             </h1>
@@ -262,26 +275,11 @@ const Contact: React.FC = () => {
             </p>
           </motion.div>
         </div>
-        
-        {/* Animated Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer hidden sm:block"
-        >
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <motion.div
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-3 bg-white rounded-full mt-2"
-            />
-          </div>
-        </motion.div>
       </section>
 
-      {/* Contact Section - Now visible immediately with lazy animation */}
+      {/* Contact Section */}
       <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white" ref={sectionRef}>
-        <div className="container-custom max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -301,7 +299,7 @@ const Contact: React.FC = () => {
               <div className="p-5 sm:p-6 md:p-8">
                 {showSuccess ? (
                   <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
+                    initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-6 md:p-8 text-center"
                   >
@@ -414,26 +412,29 @@ const Contact: React.FC = () => {
                         Event Type <span className="text-red-500">*</span>
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                        {eventTypes.map((event) => (
-                          <motion.button
-                            key={event.value}
-                            type="button"
-                            whileHover={{ scale: 1.02, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => {
-                              setFormData(prev => ({ ...prev, eventType: event.value }));
-                              if (errors.eventType) setErrors(prev => ({ ...prev, eventType: undefined }));
-                            }}
-                            className={`p-2.5 md:p-3 rounded-xl border-2 transition-all duration-300 flex items-center gap-2 text-sm md:text-base ${
-                              formData.eventType === event.value
-                                ? `bg-gradient-to-r ${event.color} border-transparent text-white shadow-lg`
-                                : 'border-gray-200 hover:border-primary/50 bg-white'
-                            }`}
-                          >
-                            <event.icon size={16} className="md:text-lg" />
-                            <span className="font-medium text-xs sm:text-sm">{event.label}</span>
-                          </motion.button>
-                        ))}
+                        {eventTypes.map((event) => {
+                          const IconComponent = event.icon;
+                          return (
+                            <motion.button
+                              key={event.value}
+                              type="button"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, eventType: event.value }));
+                                if (errors.eventType) setErrors(prev => ({ ...prev, eventType: undefined }));
+                              }}
+                              className={`p-2.5 md:p-3 rounded-xl border-2 transition-all duration-300 flex items-center gap-2 text-sm md:text-base ${
+                                formData.eventType === event.value
+                                  ? `bg-gradient-to-r ${event.color} border-transparent text-white shadow-lg`
+                                  : 'border-gray-200 hover:border-primary/50 bg-white'
+                              }`}
+                            >
+                              <IconComponent size={16} className="md:text-lg" />
+                              <span className="font-medium text-xs sm:text-sm">{event.label}</span>
+                            </motion.button>
+                          );
+                        })}
                       </div>
                       {errors.eventType && (
                         <motion.p
@@ -464,7 +465,7 @@ const Contact: React.FC = () => {
                           }`}
                           min={new Date().toISOString().split('T')[0]}
                         />
-                        <MdCalendarToday className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        <MdCalendarToday className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={18} />
                       </div>
                       {errors.eventDate && (
                         <motion.p
@@ -496,7 +497,7 @@ const Contact: React.FC = () => {
                         />
                         <motion.span 
                           key={formData.guests}
-                          initial={{ scale: 1.2 }}
+                          initial={{ scale: 1.1 }}
                           animate={{ scale: 1 }}
                           className="font-bold text-primary text-base md:text-lg min-w-[50px] md:min-w-[60px] text-center"
                         >
@@ -555,7 +556,7 @@ const Contact: React.FC = () => {
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed py-3 md:py-4 text-base md:text-lg"
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed py-3 md:py-4 text-base md:text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
                     >
                       {isSubmitting ? (
                         <>
@@ -593,7 +594,7 @@ const Contact: React.FC = () => {
                 className="bg-gradient-to-br from-primary to-secondary rounded-2xl md:rounded-3xl p-6 md:p-8 text-white relative overflow-hidden group"
               >
                 <motion.div
-                  animate={{ y: [0, -10, 0] }}
+                  animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute -bottom-10 -left-10 w-32 h-32 md:w-40 md:h-40 bg-white/10 rounded-full"
                 />
@@ -613,40 +614,43 @@ const Contact: React.FC = () => {
               </motion.div>
               
               {/* Contact Info Cards */}
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeUpVariant}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                >
-                  <div className="flex items-start gap-3 md:gap-4">
-                    <motion.div 
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                      className={`w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
-                    >
-                      <info.icon className={`text-primary ${info.color}`} size={22} className="md:text-2xl" />
-                    </motion.div>
-                    <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 text-gray-800">{info.title}</h3>
-                      {info.details.map((detail, i) => (
-                        <p key={i} className="text-gray-600 text-xs md:text-sm mb-0.5">{detail}</p>
-                      ))}
-                      {info.action && (
-                        <motion.a
-                          href={info.title === 'Call Us' ? `tel:${info.action}` : info.action}
-                          whileHover={{ x: 5 }}
-                          className="inline-flex items-center gap-2 text-primary font-semibold text-xs md:text-sm mt-2"
-                        >
-                          {info.title === 'Call Us' ? 'Call Now' : 'Send Email'}
-                          <FaArrowRight size={10} className="md:text-xs" />
-                        </motion.a>
-                      )}
+              {contactInfo.map((info, index) => {
+                const IconComponent = info.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    variants={fadeUpVariant}
+                    whileHover={{ y: -3, scale: 1.01 }}
+                    className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                  >
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <motion.div 
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.4 }}
+                        className={`w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
+                      >
+                        <IconComponent className={`text-primary ${info.color}`} size={22} />
+                      </motion.div>
+                      <div className="flex-1">
+                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 text-gray-800">{info.title}</h3>
+                        {info.details.map((detail, i) => (
+                          <p key={i} className="text-gray-600 text-xs md:text-sm mb-0.5">{detail}</p>
+                        ))}
+                        {info.action && (
+                          <motion.a
+                            href={info.title === 'Call Us' ? `tel:${info.action}` : info.action}
+                            whileHover={{ x: 5 }}
+                            className="inline-flex items-center gap-2 text-primary font-semibold text-xs md:text-sm mt-2"
+                          >
+                            {info.title === 'Call Us' ? 'Call Now' : 'Send Email'}
+                            <FaArrowRight size={10} className="md:text-xs" />
+                          </motion.a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
               
               {/* Social Media */}
               <motion.div
@@ -655,19 +659,22 @@ const Contact: React.FC = () => {
               >
                 <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-gray-800">Connect With Us</h3>
                 <div className="flex flex-wrap gap-2 md:gap-3">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.15, y: -3 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:text-white text-gray-600`}
-                    >
-                      <social.icon size={16} className="md:text-xl" />
-                    </motion.a>
-                  ))}
+                  {socialLinks.map((social, index) => {
+                    const SocialIcon = social.icon;
+                    return (
+                      <motion.a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:text-white text-gray-600`}
+                      >
+                        <SocialIcon size={16} className="md:text-xl" />
+                      </motion.a>
+                    );
+                  })}
                 </div>
               </motion.div>
               
@@ -675,7 +682,7 @@ const Contact: React.FC = () => {
               <motion.div
                 variants={fadeUpVariant}
                 className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.3 }}
               >
                 <iframe 
@@ -695,7 +702,7 @@ const Contact: React.FC = () => {
                 variants={fadeUpVariant}
                 className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl md:rounded-2xl p-5 md:p-6 relative overflow-hidden"
               >
-                <FaQuoteLeft className="absolute -right-4 -top-4 text-purple-200" size={40} className="md:text-5xl" />
+                <FaQuoteLeft className="absolute -right-4 -top-4 text-purple-200" size={40} />
                 <div className="relative z-10">
                   <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
                     {[...Array(5)].map((_, i) => (

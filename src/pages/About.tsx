@@ -45,78 +45,52 @@ const About: React.FC = () => {
   const teamMembers: TeamMember[] = [
     {
       id: '1',
-      name: 'KL Rahul',
-      position: 'Founder & Creative Director',
-      bio: 'With over 10 years of experience in event planning, Lakshmi has orchestrated some of the most prestigious events in Rajahmundry. Her creative vision and attention to detail have made Lakshmi Ganapathi Events a household name.',
-      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/q_auto/f_auto/v1776607275/KL_Rahul_1747752355887_d3sxua.avif',
+      name: 'Yogesh Rayudu',
+      position: 'Event Planner',
+      bio: 'With over 05 years of experience in event planning, Yogesh Rayudu has orchestrated some of the most prestigious events in Rajahmundry. His creative vision and attention to detail have made Lakshmi Ganapathi Events a household name.',
+      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777040462/C9aHd-8PyPF_WEBP_va596o.jpg',
       social: {
         facebook: '#',
-        instagram: '#',
+        instagram: 'https://www.instagram.com/_ammadi_rayudu_?igsh=a2Izc24ybmdubGVw',
         linkedin: '#'
       },
-      expertise: ['Creative Direction', 'Wedding Planning', 'Event Design']
+      expertise: ['Creative Planning', 'Wedding Planning', 'Event Design' , 'Flower Decoration']
     },
-    {
-      id: '2',
-      name: 'Shreyas Iyer',
-      position: 'Operations Head',
-      bio: 'Sai brings operational excellence and logistical expertise to every event. His background in project management ensures seamless execution from concept to completion in Rajahmundry and surrounding areas.',
-      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/q_auto/f_auto/v1776607414/shreyass_wmvl6y.jpg',
-      social: {
-        facebook: '#',
-        instagram: '#',
-        linkedin: '#'
-      },
-      expertise: ['Logistics', 'Vendor Management', 'Budget Planning']
-    },
-    {
-      id: '3',
-      name: 'Rohit Sharma',
-      position: 'Creative Designer',
-      bio: 'Priyanka\'s artistic flair transforms venues into magical spaces. Her innovative designs and thematic concepts have earned recognition from clients across Godavari district.',
-      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/q_auto/f_auto/v1776607275/rohit_vk9od3.jpg',
-      social: {
-        facebook: '#',
-        instagram: '#',
-        linkedin: '#'
-      },
-      expertise: ['Interior Design', 'Floral Arrangements', 'Theme Development']
-    }
   ];
 
   const milestones: Milestone[] = [
     {
-      year: '2015',
+      year: '2020',
       title: 'Company Founded',
       description: 'Lakshmi Ganapathi Events was established in Rajahmundry with a vision to create unforgettable celebrations',
       icon: Calendar
     },
     {
-      year: '2016',
+      year: '2021',
       title: 'First Major Award',
       description: 'Received "Best Event Planner in Rajahmundry" award from local industry association',
       icon: Award
     },
     {
-      year: '2018',
+      year: '2022',
       title: 'City\'s Most Trusted',
       description: 'We grew to become the most trusted event management company in Rajahmundry city',
       icon: TrendingUp
     },
     {
-      year: '2019',
+      year: '2023',
       title: '500th Event',
       description: 'Celebrated our 500th successful event milestone with families across Godavari district',
       icon: Trophy
     },
     {
-      year: '2022',
+      year: '2024',
       title: 'Excellence Award',
       description: 'Recognized as "Best Event Planning Service" by Rajahmundry Business Excellence Awards',
       icon: Star
     },
     {
-      year: '2024',
+      year: '2025',
       title: 'Community Leaders',
       description: 'Honored as top event planners in East Godavari district for outstanding service',
       icon: Heart
@@ -213,7 +187,7 @@ const About: React.FC = () => {
               <span className="text-primary font-semibold text-sm">Our Story</span>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4">
                 Crafting Unforgettable 
-                <span className="text-primary"> Experiences</span> Since 2015
+                <span className="text-primary"> Experiences</span> Since 2020
               </h2>
               <div className="space-y-3 text-gray-600 text-sm leading-relaxed">
                 <p>
@@ -543,9 +517,9 @@ const About: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { name: 'Ramesh Babu', role: 'Wedding Client', text: 'Lakshmi Ganapathi Events made our dream wedding a reality! Every detail was perfect.' },
-              { name: 'Sridevi Garu', role: 'Haldi Ceremony', text: 'The haldi ceremony was beautifully organized with vibrant decor and joyful ambiance.' },
-              { name: 'Venkatesh Rao', role: 'Housewarming', text: 'The most professional event team I have ever worked with in Rajahmundry.' }
+              { name: 'Rahul Kumar', role: 'Wedding Client', text: 'Lakshmi Ganapathi Events made our dream wedding a reality! Every detail was perfect.' },
+              { name: 'Sridevi', role: 'Haldi Ceremony', text: 'The haldi ceremony was beautifully organized with vibrant decor and joyful ambiance.' },
+              { name: 'Ajay Kumar', role: 'Housewarming', text: 'The most professional event team I have ever worked with in Rajahmundry.' }
             ].map((testimonial, index) => (
               <motion.div
                 key={index}
