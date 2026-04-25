@@ -168,6 +168,7 @@ const MobileView: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const touchStartY = useRef(0);
+  const touchCurrentY = useRef(0); // ✅ NEW: track current touch position via ref
 
   useEffect(() => {
     const initialLikes: Record<string, number> = {};
@@ -206,21 +207,28 @@ const MobileView: React.FC = () => {
     if (idx >= 0 && idx < reels.length) setActiveIndex(idx);
   }, []);
 
+  // ✅ FIXED: reset dragOffset and record start position via ref
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
+    touchCurrentY.current = e.touches[0].clientY;
     setIsDragging(true);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    setDragOffset(e.touches[0].clientY - touchStartY.current);
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    if (dragOffset < -50) goTo(activeIndex + 1);
-    else if (dragOffset > 50) goTo(activeIndex - 1);
     setDragOffset(0);
+  };
+
+  // ✅ FIXED: removed isDragging state check (it's async, causes missed events)
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchCurrentY.current = e.touches[0].clientY;
+    const offset = touchCurrentY.current - touchStartY.current;
+    setDragOffset(offset);
+  };
+
+  // ✅ FIXED: use ref value instead of stale dragOffset state
+  const handleTouchEnd = () => {
+    const offset = touchCurrentY.current - touchStartY.current;
+    setIsDragging(false);
+    setDragOffset(0);
+    if (offset < -50) goTo(activeIndex + 1);      // swipe up → next reel
+    else if (offset > 50) goTo(activeIndex - 1);  // swipe down → prev reel
   };
 
   const handleLike = (id: string) => {
