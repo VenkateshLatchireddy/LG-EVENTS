@@ -194,7 +194,7 @@ const Home: React.FC = () => {
       role: 'Haldi Ceremony Client',
       content: 'The Haldi ceremony was beautifully organized with vibrant decor, joyful ambiance, and perfect attention to every detail. It made our special day even more memorable!',
       rating: 5,
-      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/q_auto/f_auto/v1776350811/sridevi.jpg',
+      image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1776350811/sridevihchjfjdjdj.jpg',
       eventType: 'Haldi Ceremony'
     },
     {

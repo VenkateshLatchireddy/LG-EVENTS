@@ -46,7 +46,7 @@ const About: React.FC = () => {
     {
       id: '1',
       name: 'Yogesh Rayudu',
-      position: 'Event Planner',
+      position: 'Event Organizer',
       bio: 'With over 05 years of experience in event planning, Yogesh Rayudu has orchestrated some of the most prestigious events in Rajahmundry. His creative vision and attention to detail have made Lakshmi Ganapathi Events a household name.',
       image: 'https://res.cloudinary.com/dqgjdxwgw/image/upload/v1777040462/C9aHd-8PyPF_WEBP_va596o.jpg',
       social: {
