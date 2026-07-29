@@ -1,7 +1,8 @@
-import React, { useState,} from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Link from 'next/link';
 
 // Swiper imports for Swiper 12
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,8 +22,6 @@ import {
 
   ArrowRight,
   Star,
-  ChevronRight,
-  ChevronLeft,
   Music,
   Camera,
   Utensils,
@@ -76,24 +75,7 @@ const Home: React.FC = () => {
   const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
 
   const handleLike = (id: string) => {
-    setLikedStates((prev) => {
-      const isNowLiked = !prev[id];
-
-      if (isNowLiked) {
-        setFeaturedHighlights((current) =>
-          current.map((item) =>
-            item.id === id
-              ? { ...item, likes: (item.likes || 0) + 1 }
-              : item
-          )
-        );
-      }
-
-      return {
-        ...prev,
-        [id]: isNowLiked,
-      };
-    });
+    setLikedStates((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleShare = (event: Event) => {
@@ -111,11 +93,7 @@ const Home: React.FC = () => {
   };
 
   const formatNumber = (value: number) => {
-    return value.toLocaleString();
-  };
-
-  const getRandomInt = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return new Intl.NumberFormat('en-US').format(value);
   };
 
   // Cloudinary helper function
@@ -280,7 +258,7 @@ const Home: React.FC = () => {
     },
   ];
 
-  const [featuredHighlights, setFeaturedHighlights] = useState<Event[]>(() => [
+  const [featuredHighlights] = useState<Event[]>(() => [
     {
       id: 'highlight-wedding',
       title: 'Wedding Reception',
@@ -289,9 +267,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('happyweddingggggggbdkfkkif', 800, 600),
       category: 'Wedding',
       description: 'Elegant reception with warm lighting, dance floor, and memorable entertainment.',
-      views: getRandomInt(1800, 7600),
-      likes: getRandomInt(120, 540),
-      shares: getRandomInt(20, 140),
+      views: 4826,
+      likes: 327,
+      shares: 84,
     },
     {
       id: 'highlight-haldi',
@@ -301,9 +279,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('sridevihchjfjdjdj', 800, 600),
       category: 'Haldi',
       description: 'A colorful haldi celebration filled with joy, music, and smiles.',
-      views: getRandomInt(1600, 7000),
-      likes: getRandomInt(90, 420),
-      shares: getRandomInt(15, 120),
+      views: 3914,
+      likes: 268,
+      shares: 63,
     },
     {
       id: 'highlight-half-saree',
@@ -313,9 +291,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('halfsareeeeeee', 800, 600),
       category: 'Half Saree',
       description: 'A beautiful half saree ceremony with traditional customs and elegant décor.',
-      views: getRandomInt(2100, 8200),
-      likes: getRandomInt(140, 560),
-      shares: getRandomInt(25, 150),
+      views: 5738,
+      likes: 412,
+      shares: 97,
     },
     {
       id: 'highlight-housewarming',
@@ -325,9 +303,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('housewarmingggggggg', 800, 600),
       category: 'Housewarming',
       description: 'A warm housewarming event with intimate family celebrations and modern décor.',
-      views: getRandomInt(1300, 6200),
-      likes: getRandomInt(80, 380),
-      shares: getRandomInt(18, 110),
+      views: 3247,
+      likes: 219,
+      shares: 51,
     },
     {
       id: 'highlight-naming',
@@ -337,9 +315,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('happyweddingggggggnckcjfc', 800, 600),
       category: 'Naming',
       description: 'A heartfelt naming ceremony with beautiful rituals and loving family moments.',
-      views: getRandomInt(1600, 6800),
-      likes: getRandomInt(95, 410),
-      shares: getRandomInt(12, 105),
+      views: 4182,
+      likes: 286,
+      shares: 59,
     },
     {
       id: 'highlight-birthday',
@@ -349,9 +327,9 @@ const Home: React.FC = () => {
       image: getCloudinaryUrl('birthdayyyyyyyy', 800, 600),
       category: 'Birthday',
       description: 'A fun-filled birthday celebration with festive lighting and joyful vibes.',
-      views: getRandomInt(1900, 7600),
-      likes: getRandomInt(130, 520),
-      shares: getRandomInt(22, 145),
+      views: 5261,
+      likes: 374,
+      shares: 88,
     },
   ]);
 
@@ -377,17 +355,6 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Lakshmi Ganapathi Events - Creating Unforgettable Events | Premium Event Management Services</title>
-        <meta name="description" content="Professional event management services for weddings, corporate events, parties, conferences, and more. Make your event extraordinary with Lakshmi Ganapathi Events." />
-        <meta name="keywords" content="event management, wedding planner, corporate events, party planning, conference organizer, event production" />
-        <meta property="og:title" content="Lakshmi Ganapathi Events - Premium Event Management Services" />
-        <meta property="og:description" content="Creating unforgettable moments with professional event planning and execution." />
-        <meta property="og:image" content={getCloudinaryUrl('events/birthday.jpg', 1200, 630)} />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://LakshmiGanapathiEvents.com" />
-      </Helmet>
 {/* Hero Section - COMPLETELY REWRITTEN */}
 <div className="relative w-full min-h-screen overflow-hidden pt-24 lg:pt-28">
   {/* Video Background - Desktop & Mobile versions */}
@@ -449,14 +416,14 @@ const Home: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row gap-3">
           <Link 
-            to="/contact" 
+            href="/contact" 
             className="bg-gradient-to-r from-amber-500 to-red-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all inline-flex items-center justify-center gap-2"
           >
             Plan Your Event
             <ArrowRight size={16} />
           </Link>
           <Link 
-            to="/events" 
+            href="/events" 
             className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2 border border-white/30"
           >
             <Play size={14} />
@@ -587,7 +554,7 @@ const Home: React.FC = () => {
       className="text-center mt-8"
     >
       <Link
-        to="/services"
+        href="/services"
         className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-full text-sm sm:text-base font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 group"
       >
         <span>View All Services</span>
@@ -651,7 +618,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/events" className="btn-primary inline-flex items-center gap-2 group">
+            <Link href="/events" className="btn-primary inline-flex items-center gap-2 group">
               View All Events
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -663,7 +630,7 @@ const Home: React.FC = () => {
 {/* ============================================
    MOBILE-FIRST EVENT HIGHLIGHTS WITH SCROLLING TEXT TICKERS
    ============================================ */}
-<section className="py-12 bg-gradient-to-br from-secondary via-secondary to-primary relative overflow-hidden">
+<section className="relative overflow-hidden bg-gradient-to-br from-secondary via-secondary to-primary pt-5 pb-5 md:pt-6 md:pb-6">
   {/* Decorative Background */}
   <div className="absolute inset-0 opacity-5">
     <div className="absolute top-0 left-0 w-72 h-72 bg-yellow-400 rounded-full filter blur-3xl"></div>
@@ -673,7 +640,7 @@ const Home: React.FC = () => {
   <div className="container-custom px-4 relative z-10">
     
     {/* ========== TOP SCROLLER - SCROLLING RIGHT ========== */}
-    <div className="overflow-hidden whitespace-nowrap py-3 mb-6 bg-white/10 backdrop-blur-sm rounded-full">
+    <div className="mb-3 overflow-hidden whitespace-nowrap rounded-full bg-white/10 py-3 backdrop-blur-sm">
       <div className="animate-scroll-right inline-flex items-center gap-8">
         <span className="inline-flex items-center gap-2 text-yellow-400 text-sm font-medium">
           🎉 500+ Happy Weddings Completed
@@ -717,159 +684,147 @@ const Home: React.FC = () => {
       </div>
     </div>
 
-    {/* Header - Mobile Optimized */}
-    <div className="text-center mb-4">
-
-
-      <p className="text-gray-200 text-sm max-w-md mx-auto">
-        Swipe through our most cherished moments
-      </p>
-    </div>
-
-    {/* Horizontal Scroll Carousel - Mobile First */}
-    <div className="relative group">
-      {/* Left Scroll Button - Desktop only */}
-      <button 
-        onClick={() => {
-          const container = document.getElementById('mobile-scroll-container');
-          if (container) container.scrollBy({ left: -320, behavior: 'smooth' });
+    {/* Continuous right-to-left event carousel */}
+    <div className="relative -mx-4 px-4">
+      <Swiper
+        modules={[Autoplay]}
+        loop
+        grabCursor
+        allowTouchMove
+        simulateTouch
+        threshold={4}
+        touchRatio={1}
+        shortSwipes
+        longSwipes
+        longSwipesRatio={0.15}
+        resistanceRatio={0.7}
+        speed={6500}
+        slidesPerView={1.08}
+        spaceBetween={16}
+        onTouchStart={(swiper) => {
+          swiper.autoplay.stop();
         }}
-        className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full -ml-4 hover:bg-black/70 transition-all"
-      >
-        <ChevronLeft size={20} />
-      </button>
-
-      {/* Scroll Container */}
-      <div 
-        id="mobile-scroll-container"
-        className="overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
-        style={{ 
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch'
+        onTouchEnd={(swiper) => {
+          swiper.slideToClosest(320);
+          window.setTimeout(() => swiper.autoplay.start(), 450);
         }}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        breakpoints={{
+          520: { slidesPerView: 1.55, spaceBetween: 18 },
+          768: { slidesPerView: 2.25, spaceBetween: 20 },
+          1024: { slidesPerView: 3.15, spaceBetween: 22 },
+          1280: { slidesPerView: 3.45, spaceBetween: 22 },
+        }}
+        className="event-moments-swiper !overflow-visible !pb-8"
       >
-        <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
-          {featuredHighlights.map((event, idx) => (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-[280px] sm:w-[300px] flex-shrink-0"
+        {featuredHighlights.map((event, idx) => (
+          <SwiperSlide key={event.id} className="!h-auto">
+            <motion.article
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: Math.min(idx * 0.05, 0.2) }}
+              className="group/card flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/25 bg-white/95 shadow-[0_24px_60px_-28px_rgba(10,8,28,0.75)] backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_-25px_rgba(10,8,28,0.9)]"
             >
-              {/* Card */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
-                {/* Image Container with Overlay Actions */}
-                <div className="relative h-52 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  
-                  {/* Category Badge - Top Left */}
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-gradient-to-r from-primary to-secondary text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-lg">
-                      {event.category}
-                    </span>
-                  </div>
+              <div className="relative h-60 overflow-hidden bg-secondary/20 sm:h-64">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="h-full w-full object-cover transition duration-700 ease-out group-hover/card:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/15" />
 
-                  {/* Action Buttons - Top Right */}
-                  <div className="absolute top-3 right-3 flex gap-2">
-                    <button 
-                      onClick={() => handleLike(event.id)}
-                      className="bg-black/40 backdrop-blur-sm p-2 rounded-full hover:bg-black/60 transition-all active:scale-95"
-                    >
-                      <Heart 
-                        size={16} 
-                        className={likedStates[event.id] ? 'fill-red-500 text-red-500' : 'text-white'} 
-                      />
-                    </button>
-                    <button 
-                      onClick={() => handleShare(event)}
-                      className="bg-black/40 backdrop-blur-sm p-2 rounded-full hover:bg-black/60 transition-all active:scale-95"
-                    >
-                      <Share2 size={16} className="text-white" />
-                    </button>
-                  </div>
+                <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-black/25 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-md">
+                  {event.category}
+                </span>
 
-                  {/* Quick Stats - Bottom Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                    <div className="flex justify-between text-white text-xs">
-                      <div className="flex items-center gap-1.5">
-                        <Eye size={12} />
-                        <span>{formatNumber(event.views || 0)} views</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Heart size={12} className={likedStates[event.id] ? 'fill-red-500' : ''} />
-                        <span>{formatNumber((event.likes || 0) + (likedStates[event.id] ? 1 : 0))}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Share2 size={12} />
-                        <span>{formatNumber(event.shares || 0)}</span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="absolute right-4 top-4 flex gap-2">
+                  <button
+                    type="button"
+                    aria-label={likedStates[event.id] ? `Unlike ${event.title}` : `Like ${event.title}`}
+                    aria-pressed={Boolean(likedStates[event.id])}
+                    onClick={() => handleLike(event.id)}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/25 text-white backdrop-blur-md transition hover:scale-105 hover:bg-white hover:text-secondary active:scale-95"
+                  >
+                    <Heart
+                      size={17}
+                      className={likedStates[event.id] ? 'fill-red-500 text-red-500' : ''}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={`Share ${event.title}`}
+                    onClick={() => handleShare(event)}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/25 text-white backdrop-blur-md transition hover:scale-105 hover:bg-white hover:text-secondary active:scale-95"
+                  >
+                    <Share2 size={17} />
+                  </button>
                 </div>
 
-                {/* Card Content */}
-                <div className="p-4">
-                  <h3 className="font-bold text-base text-gray-800 mb-1 line-clamp-1">
-                    {event.title}
-                  </h3>
-                  <p className="text-gray-500 text-xs mb-3 line-clamp-2">
-                    {event.description}
-                  </p>
-                  
-                  {/* Event Details Row */}
-                  <div className="flex items-center justify-between mb-3 text-xs text-gray-500">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar size={12} />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users size={12} />
-                      <span>{event.guests}</span>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-2">
-                    <Link 
-                      to={`/events`}
-                      className="flex-1 bg-gradient-to-r from-primary to-secondary text-white text-center py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-all"
-                    >
-                      View Details
-                    </Link>
-                  </div>
+                <div className="absolute inset-x-4 bottom-4 flex items-center justify-between text-[11px] font-medium text-white/90">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Eye size={13} />
+                    {formatNumber(event.views || 0)} views
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Heart
+                      size={13}
+                      className={likedStates[event.id] ? 'fill-red-500 text-red-500' : ''}
+                    />
+                    {formatNumber((event.likes || 0) + (likedStates[event.id] ? 1 : 0))}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Share2 size={13} />
+                    {formatNumber(event.shares || 0)}
+                  </span>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
 
-      {/* Right Scroll Button - Desktop only */}
-      <button 
-        onClick={() => {
-          const container = document.getElementById('mobile-scroll-container');
-          if (container) container.scrollBy({ left: 320, behavior: 'smooth' });
-        }}
-        className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full -mr-4 hover:bg-black/70 transition-all"
-      >
-        <ChevronRight size={20} />
-      </button>
+              <div className="flex flex-1 flex-col p-5">
+                <h3 className="text-lg font-bold tracking-tight text-slate-900">
+                  {event.title}
+                </h3>
+                <p className="mt-1.5 min-h-10 line-clamp-2 text-xs leading-relaxed text-slate-500">
+                  {event.description}
+                </p>
+
+                <div className="my-4 h-px bg-gradient-to-r from-slate-200 via-slate-100 to-transparent" />
+
+                <div className="mb-4 flex flex-wrap gap-2 text-[11px] font-medium text-slate-600">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1.5">
+                    <Calendar size={13} className="text-primary" />
+                    {event.date}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1.5">
+                    <Users size={13} className="text-primary" />
+                    {event.guests} guests
+                  </span>
+                </div>
+
+                <Link
+                  href="/events"
+                  className="mt-auto flex items-center justify-between rounded-2xl bg-gradient-to-r from-primary to-secondary px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/15 transition hover:shadow-xl hover:shadow-primary/25 active:scale-[0.98]"
+                >
+                  Explore this event
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15">
+                    <ArrowRight size={14} />
+                  </span>
+                </Link>
+              </div>
+            </motion.article>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
 
-    {/* Scroll Hint - Mobile Only */}
-    <div className="text-center mt-2 block lg:hidden">
-      <p className="text-white/50 text-xs flex items-center justify-center gap-1">
-        ← Swipe to see more →
-      </p>
-    </div>
+    <p className="mt-1 text-center text-[11px] font-medium text-white/45 lg:hidden">
+      Drag to explore · autoplay resumes automatically
+    </p>
 
     {/* ========== BOTTOM SCROLLER - SCROLLING LEFT ========== */}
     <div className="overflow-hidden whitespace-nowrap py-3 mt-6 bg-white/10 backdrop-blur-sm rounded-full">
@@ -917,9 +872,9 @@ const Home: React.FC = () => {
     </div>
 
     {/* View All Button */}
-    <div className="text-center mt-6">
+    <div className="mt-4 text-center">
       <Link 
-        to="/events" 
+        href="/events" 
         className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-white/20 transition-all active:scale-95 border border-white/20"
       >
         View All Events
@@ -989,7 +944,7 @@ const Home: React.FC = () => {
             </button>
             <button 
               onClick={() => {
-                navigator.clipboard.writeText('Check out Lakshmi Ganapathi Events!');
+                copyToClipboard('Check out Lakshmi Ganapathi Events!');
                 setShowShareMenu(null);
               }}
               className="flex flex-col items-center gap-2 p-3 rounded-xl bg-blue-50 active:scale-95 transition-all"
@@ -1102,7 +1057,7 @@ const Home: React.FC = () => {
 </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-10">
+      <section className="pt-8 pb-4 md:pt-10 md:pb-5">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <motion.div
@@ -1148,7 +1103,7 @@ const Home: React.FC = () => {
                 ))}
               </div>
 
-              <Link to="/about" className="btn-primary inline-flex items-center gap-2 mt-8 group">
+              <Link href="/about" className="btn-primary inline-flex items-center gap-2 mt-8 group">
                 Learn More About Us
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>

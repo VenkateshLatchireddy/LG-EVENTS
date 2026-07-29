@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+'use client';
+
+import React, { useRef, useState, useSyncExternalStore } from 'react';
+import { motion, useInView } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 // React Icons Imports
 import { 
@@ -72,6 +74,10 @@ interface SocialLink {
   label: string;
 }
 
+const subscribeToDate = () => () => {};
+const getCurrentDate = () => new Date().toISOString().split('T')[0];
+const getServerDate = () => '';
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -87,6 +93,11 @@ const Contact: React.FC = () => {
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [focusedField, setFocusedField] = useState<string>('');
   const [submitError] = useState<string>('');
+  const minimumEventDate = useSyncExternalStore(
+    subscribeToDate,
+    getCurrentDate,
+    getServerDate,
+  );
   
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
@@ -120,37 +131,39 @@ const Contact: React.FC = () => {
   };
 
   const formatWhatsAppMessage = (): string => {
-    const message = `*LAKSHMI GANAPATHI EVENTS - New Inquiry*%0A%0A
-*📋 EVENT DETAILS*%0A
-━━━━━━━━━━━━━━━━━━━━%0A
-*Name:* ${formData.name}%0A
-*Phone:* ${formData.phone}%0A
-*Email:* ${formData.email || 'Not provided'}%0A
-*Event Type:* ${formData.eventType}%0A
-*Event Date:* ${formData.eventDate}%0A
-*Expected Guests:* ${formData.guests}+%0A
-*Message:* ${formData.message}%0A%0A
-━━━━━━━━━━━━━━━━━━━━%0A
-*Ready to plan an amazing event!*`;
-    
-    return message;
+    return [
+      '*LAKSHMI GANAPATHI EVENTS - New Inquiry*',
+      '',
+      '*📋 EVENT DETAILS*',
+      '━━━━━━━━━━━━━━━━━━━━',
+      `*Name:* ${formData.name}`,
+      `*Phone:* ${formData.phone}`,
+      `*Email:* ${formData.email || 'Not provided'}`,
+      `*Event Type:* ${formData.eventType}`,
+      `*Event Date:* ${formData.eventDate}`,
+      `*Expected Guests:* ${formData.guests}+`,
+      `*Message:* ${formData.message}`,
+      '',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '*Ready to plan an amazing event!*',
+    ].join('\n');
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!validateForm()) return;
     
     setIsSubmitting(true);
     
-    const message = formatWhatsAppMessage();
     const phoneNumber = '919542256678';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(formatWhatsAppMessage())}`;
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     
     setTimeout(() => {
       setIsSubmitting(false);
       setShowSuccess(true);
-      window.open(whatsappUrl, '_blank');
       
       setTimeout(() => {
         setShowSuccess(false);
@@ -238,12 +251,6 @@ const Contact: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Contact Us - Lakshmi Ganapathi Events | Let's Plan Your Dream Event</title>
-        <meta name="description" content="Get in touch with our event planning experts. Free consultation, customized quotes, and professional advice for your next event." />
-        <meta name="keywords" content="contact event planner, event consultation, book event planner" />
-      </Helmet>
-
       {/* Hero Section */}
       <section className="relative min-h-[400px] md:min-h-[450px] lg:min-h-[500px] overflow-hidden pt-24 pb-12">
         <div className="absolute inset-0">
@@ -463,7 +470,7 @@ const Contact: React.FC = () => {
                               ? 'border-red-500 bg-red-50' 
                               : 'border-gray-200 hover:border-primary/50 focus:border-primary focus:shadow-lg'
                           }`}
-                          min={new Date().toISOString().split('T')[0]}
+                          min={minimumEventDate || undefined}
                         />
                         <MdCalendarToday className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={18} />
                       </div>

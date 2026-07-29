@@ -1,5 +1,9 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import LGE_LOGO from '../assets/LGE.jpg';
 import { 
@@ -9,7 +13,7 @@ import {
   Home,
   Calendar,
   Briefcase,
-  Image,
+  Image as ImageIcon,
   Info,
   Newspaper,
   Mail
@@ -18,7 +22,7 @@ import {
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,14 +33,15 @@ const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
-  }, [location]);
+    const frame = window.requestAnimationFrame(() => setIsOpen(false));
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Events', path: '/events', icon: Calendar },
     { name: 'Services', path: '/services', icon: Briefcase },
-    { name: 'Gallery', path: '/gallery', icon: Image },
+    { name: 'Gallery', path: '/gallery', icon: ImageIcon },
     { name: 'About', path: '/about', icon: Info },
     { name: 'Blog', path: '/blog', icon: Newspaper },
     { name: 'Contact', path: '/contact', icon: Mail },
@@ -120,25 +125,27 @@ const Navbar: React.FC = () => {
               variants={logoSpinVariants}
               className="flex-shrink-0 ml-0"
             >
-              <Link to="/" className="flex items-center space-x-3 group">
+              <Link href="/" className="flex items-center space-x-3 group">
                 <div className="relative">
                   <motion.div
                     animate={pulseAnimation}
                     className="absolute inset-0 bg-gradient-to-r from-amber-500 to-red-500 rounded-full blur-xl opacity-50"
                   />
                   <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-xl overflow-hidden">
-                    <img 
+                    <Image
                       src={LGE_LOGO} 
                       alt="LAKSHMI GANAPATHI EVENTS" 
                       className="w-full h-full object-cover"
+                      sizes="(min-width: 768px) 48px, 40px"
+                      priority
                     />
                   </div>
                 </div>
-                <div className="leading-tight">
-                  <div className="text-sm md:text-base font-['Cormorant_Garamond'] font-bold bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text text-transparent whitespace-nowrap tracking-wide">
+                <div className="leading-none">
+                  <div className="whitespace-nowrap font-playfair text-sm font-bold tracking-wider text-amber-300 sm:text-base md:text-xl">
                     LAKSHMI GANAPATHI
                   </div>
-                  <div className="text-[9px] md:text-[11px] text-gray-400 -mt-0.5 tracking-[0.2em] font-['Cormorant_Garamond'] font-semibold">
+                  <div className="mt-1 text-[9px] font-semibold tracking-[3.5px] text-amber-500 md:text-[11px]">
                     EVENTS
                   </div>
                 </div>
@@ -156,16 +163,16 @@ const Navbar: React.FC = () => {
                   className="relative"
                 >
                   <Link
-                    to={link.path}
+                    href={link.path}
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                      location.pathname === link.path
+                      pathname === link.path
                         ? 'text-amber-500 bg-white/10 shadow-lg'
                         : 'text-white hover:text-amber-500 hover:bg-white/5'
                     }`}
                   >
                     <link.icon size={16} />
                     {link.name}
-                    {location.pathname === link.path && (
+                    {pathname === link.path && (
                       <motion.div
                         layoutId="activeNav"
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-500 to-red-500 rounded-full"
@@ -184,7 +191,7 @@ const Navbar: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/contact"
+                  href="/contact"
                   className="relative bg-gradient-to-r from-amber-500 to-red-500 px-6 py-2 rounded-full text-sm font-semibold text-white hover:shadow-xl transition-all inline-flex items-center gap-2 overflow-hidden group"
                 >
                   <motion.div
@@ -240,7 +247,7 @@ const Navbar: React.FC = () => {
                   className="flex items-center justify-between mb-6 pb-4 border-b border-gray-700"
                 >
                   <Link 
-                    to="/" 
+                    href="/"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center space-x-3"
                   >
@@ -248,17 +255,20 @@ const Navbar: React.FC = () => {
                       className="relative w-12 h-12 rounded-full overflow-hidden shadow-xl"
                       whileHover={{ scale: 1.05 }}
                     >
-                      <img 
+                      <Image
                         src={LGE_LOGO} 
                         alt="LAKSHMI GANAPATHI EVENTS" 
                         className="w-full h-full object-cover"
+                        sizes="48px"
                       />
                     </motion.div>
-                    <div>
-                      <div className="text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text text-transparent">
+                    <div className="leading-none">
+                      <div className="whitespace-nowrap font-playfair text-sm font-bold tracking-wider text-amber-300">
                         LAKSHMI GANAPATHI
                       </div>
-                      <div className="text-[10px] text-gray-400">Events</div>
+                      <div className="mt-1 text-[10px] font-semibold tracking-[3.5px] text-amber-500">
+                        EVENTS
+                      </div>
                     </div>
                   </Link>
                   <motion.button
@@ -279,17 +289,17 @@ const Navbar: React.FC = () => {
                       variants={mobileItemVariants}
                     >
                       <Link
-                        to={link.path}
+                        href={link.path}
                         onClick={() => setIsOpen(false)}
                         className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
-                          location.pathname === link.path
+                          pathname === link.path
                             ? 'text-amber-500 bg-white/10'
                             : 'text-gray-300 hover:text-amber-500 hover:bg-white/5'
                         }`}
                       >
                         <link.icon size={18} />
                         <span className="font-medium">{link.name}</span>
-                        {location.pathname === link.path && (
+                        {pathname === link.path && (
                           <motion.div
                             layoutId="mobileMenuActive"
                             className="ml-auto w-1 h-1 bg-amber-500 rounded-full"
@@ -311,7 +321,7 @@ const Navbar: React.FC = () => {
                     className="mt-4"
                   >
                     <Link
-                      to="/contact"
+                      href="/contact"
                       onClick={() => setIsOpen(false)}
                       className="block bg-gradient-to-r from-amber-500 to-red-500 text-center px-4 py-3 rounded-xl text-sm font-semibold text-white hover:shadow-xl transition-all relative overflow-hidden group"
                     >
@@ -353,16 +363,16 @@ const Navbar: React.FC = () => {
               className="flex-1"
             >
               <Link
-                to={link.path}
+                href={link.path}
                 className={`flex flex-col items-center gap-0.5 py-1.5 rounded-lg transition-all duration-300 ${
-                  location.pathname === link.path
+                  pathname === link.path
                     ? 'text-amber-500'
                     : 'text-gray-400 hover:text-amber-500'
                 }`}
               >
                 <link.icon size={18} />
                 <span className="text-[8px] sm:text-[9px] font-medium">{link.name}</span>
-                {location.pathname === link.path && (
+                {pathname === link.path && (
                   <motion.div
                     layoutId="mobileActiveNav"
                     className="absolute -top-1 w-1 h-1 bg-amber-500 rounded-full"

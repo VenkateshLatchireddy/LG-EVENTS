@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import {
   Heart,
   Share2,
@@ -84,54 +86,26 @@ const getEventData = (id: string): EventDetail => ({
 });
 
 const Services: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const [event, setEvent] = useState<EventDetail | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const event = getEventData('1');
   const [liked, setLiked] = useState<boolean>(false);
   const [showShare, setShowShare] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Set data immediately
-    const eventData = getEventData(id || '1');
-    setEvent(eventData);
-    setLoading(false);
-  }, [id]);
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('లింక్ కాపీ చేయబడింది!');
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert('లింక్ కాపీ చేయబడింది!');
+    } catch (error) {
+      console.warn('Clipboard copy failed', error);
+      alert('లింక్ కాపీ చేయడం సాధ్యపడలేదు.');
+    }
   };
 
   // Phone number constant
   const phoneNumber = '+919542256678';
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="loader"></div>
-      </div>
-    );
-  }
-
-  if (!event) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">ఈవెంట్ కనుగొనబడలేదు</h2>
-          <Link to="/events" className="btn-primary">ఈవెంట్లకు తిరిగి వెళ్ళు</Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
-      <Helmet>
-        <title>లక్ష్మీ గణపతి ఈవెంట్స్ | తూర్పు గోదావరి</title>
-        <meta name="description" content={event.description} />
-      </Helmet>
-
       {/* HERO SECTION */}
       <section className="relative min-h-screen overflow-hidden">
         <div className="absolute inset-0">
@@ -155,7 +129,7 @@ const Services: React.FC = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              onClick={() => navigate('/events')}
+              onClick={() => router.push('/events')}
               className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-10 transition-colors text-sm tracking-wide"
             >
               <ArrowLeft size={16} />
@@ -214,7 +188,7 @@ const Services: React.FC = () => {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  to="/contact"
+                  href="/contact"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white transition-all hover:scale-105 hover:shadow-2xl"
                   style={{
                     background: 'linear-gradient(135deg, #FF6B35, #2D1B4E)',
@@ -320,7 +294,7 @@ const Services: React.FC = () => {
                     </p>
                   </div>
                   <Link
-                    to="/contact"
+                    href="/contact"
                     className="block w-full text-center py-3 rounded-full font-bold text-white mb-3 transition-all hover:scale-105"
                     style={{
                       background: 'linear-gradient(135deg, #FF6B35, #2D1B4E)',

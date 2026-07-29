@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -201,6 +199,16 @@
   animation: scrollLeft 25s linear infinite;
 }
 
+/* Keep the featured event carousel moving at a smooth, constant pace. */
+.event-moments-swiper .swiper-wrapper {
+  align-items: stretch;
+  transition-timing-function: linear !important;
+}
+
+.event-moments-swiper .swiper-slide {
+  display: flex;
+}
+
 /* Pause animation on hover */
 .animate-scroll-right:hover,
 .animate-scroll-left:hover {
@@ -212,5 +220,17 @@
   .animate-scroll-right,
   .animate-scroll-left {
     animation-duration: 20s;
+  }
+}
+
+@media (max-width: 767px) {
+  body:has(.blog-page) footer {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-moments-swiper .swiper-wrapper {
+    transition-duration: 500ms !important;
   }
 }

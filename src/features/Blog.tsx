@@ -1,6 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+'use client';
+
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
+import { useRouter } from 'next/navigation';
 
 import {
   FaHeart,
@@ -37,11 +44,26 @@ const reels: ReelVideo[] = [
   { id: '5', publicId: 'reel555555', title: 'Wedding Celebration', description: 'Fun and festive wedding party with friends and family', likes: 5678 },
 ];
 
+const subscribeToMobileViewport = (callback: () => void) => {
+  const mediaQuery = window.matchMedia('(max-width: 767px)');
+  mediaQuery.addEventListener('change', callback);
+  return () => mediaQuery.removeEventListener('change', callback);
+};
+
+const getMobileViewportSnapshot = () =>
+  window.matchMedia('(max-width: 767px)').matches;
+
+const getServerMobileViewportSnapshot = () => false;
+
+const subscribeToHydration = () => () => {};
+const getHydratedSnapshot = () => true;
+const getServerHydratedSnapshot = () => false;
+
 /* ============================================
    DESKTOP VIEW
    ============================================ */
 const DesktopView: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
   const [hoveredVideoId, setHoveredVideoId] = useState<string | null>(null);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
@@ -68,8 +90,9 @@ const DesktopView: React.FC = () => {
   }, [playingVideoId]);
 
   useEffect(() => {
+    const videos = videoRefs.current;
     return () => {
-      Object.values(videoRefs.current).forEach(video => {
+      Object.values(videos).forEach(video => {
         if (video) video.pause();
       });
     };
@@ -79,7 +102,7 @@ const DesktopView: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4">
         <button
-          onClick={() => navigate('/blog')}
+          onClick={() => router.push('/blog')}
           className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors text-sm mb-6"
         >
           <FaArrowLeft size={14} /> Back to Blog
@@ -158,23 +181,19 @@ const DesktopView: React.FC = () => {
    MOBILE VIEW
    ============================================ */
 const MobileView: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const [muted, setMuted] = useState(false);
   const [liked, setLiked] = useState<Record<string, boolean>>({});
-  const [likesCount, setLikesCount] = useState<Record<string, number>>({});
+  const [likesCount, setLikesCount] = useState<Record<string, number>>(() =>
+    Object.fromEntries(reels.map((reel) => [reel.id, reel.likes])),
+  );
   const [videoPlayingStates, setVideoPlayingStates] = useState<Record<number, boolean>>({});
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const touchStartY = useRef(0);
   const touchCurrentY = useRef(0); // ✅ NEW: track current touch position via ref
-
-  useEffect(() => {
-    const initialLikes: Record<string, number> = {};
-    reels.forEach(reel => { initialLikes[reel.id] = reel.likes; });
-    setLikesCount(initialLikes);
-  }, []);
 
   // Monitor video playing state
   useEffect(() => {
@@ -238,9 +257,14 @@ const MobileView: React.FC = () => {
     if ('vibrate' in navigator) navigator.vibrate(50);
   };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copied!');
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert('Link copied!');
+    } catch (error) {
+      console.warn('Clipboard copy failed', error);
+      alert('Unable to copy the link. Please use your browser share menu.');
+    }
   };
 
   const togglePlayPause = (idx: number) => {
@@ -268,7 +292,7 @@ const MobileView: React.FC = () => {
       <div className="absolute top-[72px] left-0 right-0 z-30 px-4 pt-3 pb-8 bg-gradient-to-b from-black/70 to-transparent pointer-events-none">
         <div className="flex items-center justify-between">
           <button
-            onClick={() => navigate('/blog')}
+            onClick={() => router.push('/blog')}
             className="text-white pointer-events-auto w-8 h-8 flex items-center justify-center bg-black/30 rounded-full active:scale-95 transition-transform"
           >
             <FaArrowLeft size={18} />
@@ -403,39 +427,23 @@ const MobileView: React.FC = () => {
    MAIN COMPONENT
    ============================================ */
 const BlogPost: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  const isMobile = useSyncExternalStore(
+    subscribeToMobileViewport,
+    getMobileViewportSnapshot,
+    getServerMobileViewportSnapshot,
+  );
+  const isClient = useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot,
+  );
 
-  useEffect(() => {
-    setIsClient(true);
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  if (!isClient) return null;
+  if (!isClient) return <div className="blog-page" />;
 
   return (
-    <>
-      <Helmet>
-        <title>Event Reels - Lakshmi Ganapathi Events</title>
-        <meta name="description" content="Watch our latest event highlights." />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <style>{`
-          @media (max-width: 767px) {
-            footer { display: none !important; }
-          }
-          .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-        `}</style>
-      </Helmet>
+    <div className="blog-page">
       {isMobile ? <MobileView /> : <DesktopView />}
-    </>
+    </div>
   );
 };
 

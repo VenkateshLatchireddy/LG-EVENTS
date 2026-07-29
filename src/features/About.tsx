@@ -1,7 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Award, 
 
@@ -135,12 +136,6 @@ const About: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>About Us - Lakshmi Ganapathi Events | Rajahmundry's Premier Event Planners</title>
-        <meta name="description" content="Learn about Lakshmi Ganapathi Events - Rajahmundry's most trusted event management company. Creating unforgettable celebrations since 2015 with 500+ successful events." />
-        <meta name="keywords" content="about event planner, event management company, Rajahmundry events" />
-      </Helmet>
-
       {/* Hero Section - Left Aligned */}
       <section className="relative overflow-hidden pt-24 pb-12 min-h-[420px] lg:min-h-[50vh]">
         <div className="absolute inset-0">
@@ -204,11 +199,11 @@ const About: React.FC = () => {
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link to="/contact" className="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition-all inline-flex items-center gap-2">
+                <Link href="/contact" className="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition-all inline-flex items-center gap-2">
                   Work With Us
                   <ArrowRight size={16} />
                 </Link>
-                <Link to="/events" className="border-2 border-primary text-primary px-5 py-2 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-all inline-flex items-center gap-2">
+                <Link href="/events" className="border-2 border-primary text-primary px-5 py-2 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-all inline-flex items-center gap-2">
                   View Our Work
                 </Link>
               </div>
@@ -553,7 +548,7 @@ const About: React.FC = () => {
             <p className="text-sm mb-4 opacity-90">
               Let's work together to make your next event extraordinary
             </p>
-            <Link to="/contact" className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition-all">
+            <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition-all">
               Start Your Journey
               <ArrowRight size={16} />
             </Link>

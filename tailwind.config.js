@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
   content: [
-    "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -17,9 +16,11 @@ export default {
         error: '#EF4444',
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        poppins: ['var(--font-poppins)', 'sans-serif'],
+        montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        inter: ['var(--font-inter)', 'sans-serif'],
+        cormorant: ['var(--font-cormorant)', 'serif'],
+        playfair: ['var(--font-playfair)', 'serif'],
       },
       animation: {
         'float': 'float 3s ease-in-out infinite',
@@ -105,3 +106,5 @@ export default {
   },
   plugins: [],
 }
+
+export default config
