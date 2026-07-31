@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
@@ -58,6 +58,18 @@ const Events: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 9;
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleCategorySelect = (id: string) => {
+    setSelectedCategory(id);
+    setCurrentPage(1);
+    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const categories = [
     { id: 'all', name: 'All Events', icon: Sparkles, color: 'bg-gradient-to-r from-primary to-secondary' },
@@ -267,7 +279,7 @@ const Events: React.FC = () => {
                 key={category.id}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => handleCategorySelect(category.id)}
                 className={`px-3 lg:px-5 py-2 lg:py-2.5 rounded-full font-semibold text-sm lg:text-base transition-all duration-300 flex items-center gap-1 lg:gap-2 whitespace-nowrap ${
                   selectedCategory === category.id
                     ? `${category.color} text-white shadow-lg`
@@ -285,7 +297,7 @@ const Events: React.FC = () => {
 
       {/* Events Grid View */}
       <section className="py-16">
-        <div className="container-custom">
+        <div className="container-custom" ref={containerRef}>
           {/* Results Count */}
           <div className="mb-8 flex justify-between items-center">
             <p className="text-gray-600">
@@ -370,7 +382,7 @@ const Events: React.FC = () => {
               {totalPages > 1 && (
                 <div className="flex justify-center items-center gap-2 mt-12">
                   <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    onClick={() => goToPage(Math.max(currentPage - 1, 1))}
                     disabled={currentPage === 1}
                     className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors"
                   >
@@ -379,7 +391,7 @@ const Events: React.FC = () => {
                   {[...Array(totalPages)].map((_, i) => (
                     <button
                       key={i}
-                      onClick={() => setCurrentPage(i + 1)}
+                      onClick={() => goToPage(i + 1)}
                       className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 ${
                         currentPage === i + 1
                           ? 'bg-primary text-white shadow-md'
@@ -390,7 +402,7 @@ const Events: React.FC = () => {
                     </button>
                   ))}
                   <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    onClick={() => goToPage(Math.min(currentPage + 1, totalPages))}
                     disabled={currentPage === totalPages}
                     className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors"
                   >
