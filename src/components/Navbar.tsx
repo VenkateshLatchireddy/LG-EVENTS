@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -10,20 +9,6 @@ import LGE_LOGO from "../assets/LGE.jpg";
 import {
   Menu,
   X,
-=======
-'use client';
-
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import LGE_LOGO from '../assets/LGE.jpg';
-import { 
-  Menu, 
-  X, 
-  Sparkles,
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
   Home,
   Calendar,
   Briefcase,
@@ -52,7 +37,6 @@ const Navbar: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
-<<<<<<< HEAD
     { name: "Home", path: "/", icon: Home },
     { name: "Events", path: "/events", icon: Calendar },
     { name: "Services", path: "/services", icon: Briefcase },
@@ -60,15 +44,6 @@ const Navbar: React.FC = () => {
     { name: "About", path: "/about", icon: Info },
     { name: "Blog", path: "/blog", icon: Newspaper },
     { name: "Contact", path: "/contact", icon: Mail },
-=======
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Events', path: '/events', icon: Calendar },
-    { name: 'Services', path: '/services', icon: Briefcase },
-    { name: 'Gallery', path: '/gallery', icon: ImageIcon },
-    { name: 'About', path: '/about', icon: Info },
-    { name: 'Blog', path: '/blog', icon: Newspaper },
-    { name: 'Contact', path: '/contact', icon: Mail },
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
   ];
 
   // Fixed animation variants without TypeScript errors
@@ -155,13 +130,8 @@ const Navbar: React.FC = () => {
                   />
                   <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-xl overflow-hidden">
                     <Image
-<<<<<<< HEAD
                       src={LGE_LOGO}
                       alt="LAKSHMI GANAPATHI EVENTS"
-=======
-                      src={LGE_LOGO} 
-                      alt="LAKSHMI GANAPATHI EVENTS" 
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                       className="w-full h-full object-cover"
                       sizes="(min-width: 768px) 48px, 40px"
                       priority
@@ -173,11 +143,7 @@ const Navbar: React.FC = () => {
                     LAKSHMI GANAPATHI
                   </div>
                   <div className="mt-1 text-[9px] font-semibold tracking-[3.5px] text-amber-500 md:text-[11px]">
-<<<<<<< HEAD
                     E V E N T S
-=======
-                    EVENTS
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                   </div>
                 </div>
               </Link>
@@ -197,13 +163,8 @@ const Navbar: React.FC = () => {
                     href={link.path}
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                       pathname === link.path
-<<<<<<< HEAD
                         ? "text-amber-500 bg-white/10 shadow-lg"
                         : "text-white hover:text-amber-500 hover:bg-white/5"
-=======
-                        ? 'text-amber-500 bg-white/10 shadow-lg'
-                        : 'text-white hover:text-amber-500 hover:bg-white/5'
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                     }`}
                   >
                     <link.icon size={16} />
@@ -220,31 +181,6 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-<<<<<<< HEAD
-=======
-            {/* Desktop Right Side */}
-            <div className="hidden lg:flex items-center space-x-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/contact"
-                  className="relative bg-gradient-to-r from-amber-500 to-red-500 px-6 py-2 rounded-full text-sm font-semibold text-white hover:shadow-xl transition-all inline-flex items-center gap-2 overflow-hidden group"
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-amber-600 to-red-600"
-                    initial={{ x: '100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <Sparkles size={14} className="relative z-10" />
-                  <span className="relative z-10">Get Quote</span>
-                </Link>
-              </motion.div>
-            </div>
-
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
             {/* Mobile Hamburger Button */}
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
@@ -285,11 +221,7 @@ const Navbar: React.FC = () => {
                   variants={mobileItemVariants}
                   className="flex items-center justify-between mb-6 pb-4 border-b border-gray-700"
                 >
-<<<<<<< HEAD
                   <Link
-=======
-                  <Link 
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                     href="/"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center space-x-3"
@@ -299,13 +231,8 @@ const Navbar: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                     >
                       <Image
-<<<<<<< HEAD
                         src={LGE_LOGO}
                         alt="LAKSHMI GANAPATHI EVENTS"
-=======
-                        src={LGE_LOGO} 
-                        alt="LAKSHMI GANAPATHI EVENTS" 
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                         className="w-full h-full object-cover"
                         sizes="48px"
                       />
@@ -338,13 +265,8 @@ const Navbar: React.FC = () => {
                         onClick={() => setIsOpen(false)}
                         className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                           pathname === link.path
-<<<<<<< HEAD
                             ? "text-amber-500 bg-white/10"
                             : "text-gray-300 hover:text-amber-500 hover:bg-white/5"
-=======
-                            ? 'text-amber-500 bg-white/10'
-                            : 'text-gray-300 hover:text-amber-500 hover:bg-white/5'
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                         }`}
                       >
                         <link.icon size={18} />
@@ -359,38 +281,6 @@ const Navbar: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-<<<<<<< HEAD
-=======
-
-                {/* Get Quote Button */}
-                <motion.div 
-                  variants={mobileItemVariants}
-                  className="mt-6 pt-6 border-t border-gray-700"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="mt-4"
-                  >
-                    <Link
-                      href="/contact"
-                      onClick={() => setIsOpen(false)}
-                      className="block bg-gradient-to-r from-amber-500 to-red-500 text-center px-4 py-3 rounded-xl text-sm font-semibold text-white hover:shadow-xl transition-all relative overflow-hidden group"
-                    >
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-amber-600 to-red-600"
-                        initial={{ x: '100%' }}
-                        whileHover={{ x: 0 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                      <span className="relative z-10 flex items-center justify-center gap-2">
-                        <Sparkles size={16} />
-                        Get Quote
-                      </span>
-                    </Link>
-                  </motion.div>
-                </motion.div>
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
               </div>
             </motion.div>
           </>
@@ -419,7 +309,6 @@ const Navbar: React.FC = () => {
                 href={link.path}
                 className={`flex flex-col items-center gap-0.5 py-1.5 rounded-lg transition-all duration-300 ${
                   pathname === link.path
-<<<<<<< HEAD
                     ? "text-amber-500"
                     : "text-gray-400 hover:text-amber-500"
                 }`}
@@ -428,14 +317,6 @@ const Navbar: React.FC = () => {
                 <span className="text-[8px] sm:text-[9px] font-medium">
                   {link.name}
                 </span>
-=======
-                    ? 'text-amber-500'
-                    : 'text-gray-400 hover:text-amber-500'
-                }`}
-              >
-                <link.icon size={18} />
-                <span className="text-[8px] sm:text-[9px] font-medium">{link.name}</span>
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
                 {pathname === link.path && (
                   <motion.div
                     layoutId="mobileActiveNav"

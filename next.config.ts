@@ -2,7 +2,6 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-<<<<<<< HEAD
   turbopack: {
     root: process.cwd(),
   },
@@ -12,8 +11,6 @@ const nextConfig: NextConfig = {
     turbopackFileSystemCacheForDev: false,
     optimizePackageImports: ['framer-motion', 'swiper'],
   },
-=======
->>>>>>> 9c84da3429ac73ff6b77aa26a413561a09801748
   images: {
     remotePatterns: [
       {
