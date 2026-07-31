@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Calendar, 
   MapPin, 
@@ -203,16 +204,10 @@ const Events: React.FC = () => {
     },
   ];
 
-  const filteredEvents = useMemo(() => {
-    let filtered = events;
-
-    // Category filter
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(event => event.category === selectedCategory);
-    }
-
-    return filtered;
-  }, [selectedCategory]);
+  const filteredEvents =
+    selectedCategory === 'all'
+      ? events
+      : events.filter((event) => event.category === selectedCategory);
 
   const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
   const currentEvents = filteredEvents.slice(
@@ -235,12 +230,6 @@ const Events: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Our Events - Lakshmi Ganapathi Events | Premium Event Management</title>
-        <meta name="description" content="Explore our portfolio of successful events including weddings, housewarmings, half saree, haldi, naming ceremonies, and charity events." />
-        <meta name="keywords" content="event portfolio, wedding gallery, housewarming, half saree, haldi, naming ceremony" />
-      </Helmet>
-
 {/* Hero Section - Responsive height with proper padding */}
 <section className="relative min-h-[400px] md:min-h-[450px] lg:min-h-[500px] overflow-hidden pt-24 md:pt-28 pb-12 md:pb-16">
   <div className="absolute inset-0">
@@ -258,7 +247,7 @@ const Events: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="max-w-3xl text-left"
     >
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 font-['Playfair_Display'] tracking-tight uppercase">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 font-playfair tracking-tight uppercase">
         LAKSHMI GANAPATHI <span className="text-primary">Events</span>
       </h1>
       <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed font-light tracking-wide max-w-2xl">
@@ -325,7 +314,7 @@ const Events: React.FC = () => {
                 variants={staggerVariant}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
               >
                 {currentEvents.map((event) => (
                   <motion.div
@@ -366,7 +355,7 @@ const Events: React.FC = () => {
                         </div>
                       </div>
                       <Link
-                        to={`/services`}
+                        href="/services"
                         className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2 w-full justify-center"
                       >
                         View Details

@@ -1,9 +1,12 @@
-import React, { useState, useMemo } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import { Heart, Share2, Copy, Check, MapPin, Sparkles } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+
+import { SITE_URL } from '@/lib/site';
 
 // ========== CLOUDINARY CONFIGURATION ==========
 const CLOUD_NAME = 'dqgjdxwgw';
@@ -38,8 +41,6 @@ const Gallery: React.FC = () => {
   const [showShareMenu, setShowShareMenu] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const WEBSITE_URL = 'https://lakshmiganapathievents.com';
-
   const categories = [
     { id: 'all', name: 'All Photos', count: 12, icon: Sparkles },
     { id: 'wedding', name: 'Weddings', count: 2, icon: Heart },
@@ -72,12 +73,10 @@ const Gallery: React.FC = () => {
     { id: '12', publicId: 'receptionsghdhhjdhdfhj', category: 'reception', likes: 167 },
   ];
 
-  const filteredImages = useMemo(() => {
-    if (selectedCategory !== 'all') {
-      return galleryImages.filter(img => img.category === selectedCategory);
-    }
-    return galleryImages;
-  }, [selectedCategory]);
+  const filteredImages =
+    selectedCategory === 'all'
+      ? galleryImages
+      : galleryImages.filter((image) => image.category === selectedCategory);
 
   const handleLike = (imageId: string) => {
     setLikedImages(prev => 
@@ -93,7 +92,7 @@ const Gallery: React.FC = () => {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(WEBSITE_URL);
+      await navigator.clipboard.writeText(SITE_URL);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
@@ -116,12 +115,6 @@ const Gallery: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Event Gallery - Lakshmi Ganapathi Events | Premium Event Gallery</title>
-        <meta name="description" content="Browse our stunning event gallery featuring weddings, haldi, half saree, housewarmings, naming ceremonies, and charity events in Rajahmundry." />
-        <meta name="keywords" content="event gallery, wedding photos, haldi ceremony, half saree function, housewarming, naming ceremony" />
-      </Helmet>
-
 {/* Hero Section - Fixed with proper bottom padding */}
 <section className="relative min-h-[400px] md:min-h-[450px] lg:min-h-[500px] overflow-hidden pt-24 pb-12 md:pb-16 lg:pb-20">
   <div className="absolute inset-0">
@@ -143,7 +136,7 @@ const Gallery: React.FC = () => {
         <Sparkles size={14} className="text-primary" />
         <span className="text-primary text-xs font-semibold tracking-wide">OUR MEMORIES</span>
       </div>
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 leading-tight text-left font-['Playfair_Display']">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 leading-tight text-left font-playfair">
         Lakshmi Ganapathi <span className="text-primary">Gallery</span>
       </h1>
       <div className="flex items-center gap-2 mb-5 text-gray-200">
@@ -159,7 +152,7 @@ const Gallery: React.FC = () => {
 
       {/* Category Filter */}
       <section className="py-6 bg-white shadow-lg sticky top-16 z-40">
-        <div className="container-custom px-4">
+        <div className="container-custom">
           <div className="flex flex-wrap gap-2 justify-center items-center">
             {categories.map((category) => (
               <motion.button
@@ -187,7 +180,7 @@ const Gallery: React.FC = () => {
 
       {/* Gallery Grid - Simple Cards */}
       <section className="py-16 bg-light">
-        <div className="container-custom px-4">
+        <div className="container-custom">
           {filteredImages.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

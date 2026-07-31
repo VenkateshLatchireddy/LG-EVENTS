@@ -1,0 +1,62 @@
+.
+├─ .git
+├─ .gitignore
+├─ eslint.config.js
+├─ index.html
+├─ node_modules
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.cjs
+├─ public
+│  ├─ favicon.svg
+│  ├─ icons.svg
+├─ README.md
+├─ src
+│  ├─ .env
+│  ├─ .gitignore
+│  ├─ App.css
+│  ├─ App.tsx
+│  ├─ assets
+│  │  ├─ LGE.jpg
+│  │  ├─ s1.png
+│  │  ├─ s10.png
+│  │  ├─ s11.png
+│  │  ├─ s12.png
+│  │  ├─ s2.png
+│  │  ├─ s3.png
+│  │  ├─ s4.png
+│  │  ├─ s5.png
+│  │  ├─ s6.png
+│  │  ├─ s7.png
+│  │  ├─ s8.png
+│  │  ├─ s9.png
+│  ├─ components
+│  │  ├─ Footer.tsx
+│  │  ├─ LoadingSpinner.tsx
+│  │  ├─ Navbar.tsx
+│  │  ├─ ScrollToTop.tsx
+│  ├─ index.css
+│  ├─ main.tsx
+│  ├─ pages
+│  │  ├─ About.tsx
+│  │  ├─ Blog.tsx
+│  │  ├─ Contact.tsx
+│  │  ├─ Events.tsx
+│  │  ├─ Gallery.tsx
+│  │  ├─ Home.tsx
+│  │  ├─ Services.tsx
+│  ├─ services
+│  │  ├─ cloudinaryService.ts
+│  ├─ types
+│  │  ├─ index.ts
+├─ structure.txt
+├─ tailwind.config.js
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.node.json
+├─ tsconfig.node.tsbuildinfo
+├─ tsconfig.tsbuildinfo
+├─ vercel.json
+├─ vite-env.d.ts
+├─ vite.config.d.ts
+├─ vite.config.ts
